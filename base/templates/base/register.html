@@ -9,17 +9,7 @@
                     <div class="signin-header">
                         <h1>Welcome Back</h1>
                         <p>Sign in to your WoodCraft account to continue</p>
-                    </div>
-                    
-                    <!-- Display Django messages -->
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {% if message.tags == 'error' %}alert-error{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                    
+                    </div>                    
                     <form class="signin-form" method="POST" action="">
                         {% csrf_token %}
                         <div class="form-group">
@@ -80,43 +70,14 @@
     
     <!-- Register Form -->
     <div class="form-container">
-        <h2>Create Your Account</h2>
-        
-        <!-- Display Django messages -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {% if message.tags == 'error' %}alert-error{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-        
-        <!-- Display form validation errors -->
-        {% if form.errors %}
-            <div class="alert alert-error">
-                <h4>Please correct the following errors:</h4>
-                <ul>
-                    {% for field, errors in form.errors.items %}
-                        {% for error in errors %}
-                            <li>
-                                {% if field == '__all__' %}
-                                    {{ error }}
-                                {% else %}
-                                    <strong>{{ field|title }}:</strong> {{ error }}
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        
+        <h2>Create Your Account</h2>        
         <form method="POST" action="">
             {% csrf_token %}
             {% for field in form %}
-            <div class="form-group {% if field.errors %}has-error{% endif %}">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="form-field {% if field.errors %}is-invalid{% endif %}">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
+                <!-- for Form valiadation errors -->
                 {% if field.errors %}
                     <div class="field-error">
                         {% for error in field.errors %}
@@ -124,12 +85,8 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-                {% if field.help_text %}
-                    <div class="help-text">{{ field.help_text }}</div>
-                {% endif %}
             </div>
             {% endfor %}
-            
             <button type="submit" class="btn-primary">Create Account</button>
         </form>
         

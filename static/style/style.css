@@ -423,48 +423,66 @@ body {
 
 /* Forms */
 .form-container {
-    max-width: 500px;
-    margin: 100px auto 50px;
+    max-width: 480px;
+    margin: 2rem auto;
     padding: 2rem;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(67, 48, 43, 0.1);
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container h2 {
-    text-align: center;
-    color: #43302b;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-}
-
-.form-group {
+.form-field {
     margin-bottom: 1.5rem;
+    position: relative;
 }
 
-.form-group label {
+.form-label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #43302b;
     font-weight: 500;
+    color: #374151;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.form-field input,
+.form-field select,
+.form-field textarea {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #eaddd7;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
     border-radius: 6px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
     outline: none;
-    border-color: #846358;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-field.is-invalid input,
+.form-field.is-invalid select,
+.form-field.is-invalid textarea {
+    border-color: #dc2626;
+}
+
+.field-error {
+    margin-top: 0.5rem;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.875rem;
+    display: block;
+}
+
+.help-text {
+    display: block;
+    margin-top: 0.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
 }
 
 /* Profile Page */
@@ -1109,93 +1127,40 @@ body {
     }
 }
 
-/* Flash Messages Styles */
+/* Flash Messages */
 .flash-messages-container {
     position: fixed;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    width: 100%;
-    max-width: 500px;
-    padding: 0 20px;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 400px;
 }
 
 .flash-message {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
+    padding: 15px;
     margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideInDown 0.3s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-.flash-message::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.5s ease-out;
 }
 
 .flash-content {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex: 1;
 }
 
-.flash-icon {
-    font-size: 1.2rem;
-    flex-shrink: 0;
+.flash-content i {
+    font-size: 1.2em;
 }
 
-.flash-text {
-    font-size: 0.95rem;
-    font-weight: 500;
-    line-height: 1.4;
-}
-
-.flash-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    margin-left: 10px;
-}
-
-.flash-close:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    transform: scale(1.1);
-}
-
-/* Flash Message Types */
 .flash-success {
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
-}
-
-.flash-success::before {
-    background-color: #28a745;
-}
-
-.flash-success .flash-close:hover {
-    background-color: rgba(40, 167, 69, 0.2);
 }
 
 .flash-error {
@@ -1204,122 +1169,38 @@ body {
     border: 1px solid #f5c6cb;
 }
 
-.flash-error::before {
-    background-color: #dc3545;
-}
-
-.flash-error .flash-close:hover {
-    background-color: rgba(220, 53, 69, 0.2);
-}
-
 .flash-warning {
     background-color: #fff3cd;
     color: #856404;
-    border: 1px solid #ffeaa7;
-}
-
-.flash-warning::before {
-    background-color: #ffc107;
-}
-
-.flash-warning .flash-close:hover {
-    background-color: rgba(255, 193, 7, 0.2);
+    border: 1px solid #ffeeba;
 }
 
 .flash-info {
-    background-color: #d1ecf1;
-    color: #0c5460;
-    border: 1px solid #bee5eb;
+    background-color: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
 }
 
-.flash-info::before {
-    background-color: #17a2b8;
+.flash-close {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0 5px;
+    opacity: 0.5;
 }
 
-.flash-info .flash-close:hover {
-    background-color: rgba(23, 162, 184, 0.2);
+.flash-close:hover {
+    opacity: 1;
 }
 
-/* Flash Message Animations */
-@keyframes slideInDown {
+@keyframes slideIn {
     from {
-        transform: translateY(-100%);
+        transform: translateX(100%);
         opacity: 0;
     }
     to {
-        transform: translateY(0);
+        transform: translateX(0);
         opacity: 1;
     }
 }
-
-@keyframes slideOutUp {
-    from {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-}
-
-.flash-message.removing {
-    animation: slideOutUp 0.3s ease-in forwards;
-}
-
-/* Auto-hide animation */
-.flash-message.auto-hide {
-    animation: slideInDown 0.3s ease-out, fadeOut 5s ease-in forwards;
-}
-
-@keyframes fadeOut {
-    0%, 80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-/* Responsive Flash Messages */
-@media (max-width: 768px) {
-    .flash-messages-container {
-        max-width: 90%;
-        padding: 0 15px;
-    }
-    
-    .flash-message {
-        padding: 10px 14px;
-        margin-bottom: 8px;
-    }
-    
-    .flash-text {
-        font-size: 0.9rem;
-    }
-    
-    .flash-icon {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .flash-messages-container {
-        max-width: 95%;
-        padding: 0 10px;
-    }
-    
-    .flash-message {
-        padding: 8px 12px;
-        margin-bottom: 6px;
-    }
-    
-    .flash-text {
-        font-size: 0.85rem;
-    }
-    
-    .flash-close {
-        font-size: 1.3rem;
-        width: 20px;
-        height: 20px;
-    }
-} 

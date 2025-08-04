@@ -38,18 +38,36 @@
         
         <!-- Flash Messages Container -->
         <div class="flash-messages-container">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="flash-message flash-{{ message.tags }} {% if message.tags == 'error' %}flash-error{% elif message.tags == 'success' %}flash-success{% elif message.tags == 'warning' %}flash-warning{% elif message.tags == 'info' %}flash-info{% endif %}">
-                        <div class="flash-content">
-                            <span class="flash-icon">
-                                {% if message.tags == 'error' %}⚠️{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% elif message.tags == 'info' %}ℹ️{% endif %}
-                            </span>
-                            <span class="flash-text">{{ message }}</span>
-                        </div>
-                        <button class="flash-close" onclick="this.parentElement.remove()">×</button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="flash-message {% if message.tags %}flash-{{ message.tags }}{% endif %} fade-in">
+                <div class="flash-content">
+                    {% if message.tags == 'success' %}
+                        <i class="fas fa-check-circle"></i>
+                    {% elif message.tags == 'error' %}
+                        <i class="fas fa-exclamation-circle"></i>
+                    {% elif message.tags == 'warning' %}
+                        <i class="fas fa-exclamation-triangle"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle"></i>
+                    {% endif %}
+                    <span>{{ message }}</span>
+                </div>
+                <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
     </nav>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(message => {
+            setTimeout(() => {
+                message.style.animation = 'slideOut 0.5s ease-out forwards';
+                setTimeout(() => message.remove(), 500);
+            }, 5000);
+        });
+    });
+</script>
