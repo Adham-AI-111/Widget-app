@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+{% block content %}
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Handcrafted Wood Products</h1>
+            <p>Discover our collection of premium wood products, carefully crafted with passion and precision.</p>
+            <a href="#" class="btn-primary">Explore Products</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured">
+        <div class="container">
+            <h2>Featured Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Oak Wood Cutting Board">
+                    <div class="product-info">
+                        <h3>Oak Wood Cutting Board</h3>
+                        <p>Handcrafted oak cutting board perfect for kitchen use.</p>
+                        <span class="price">$89.99</span>
+                        <button class="btn-secondary">View Details</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Walnut Wood Bowl">
+                    <div class="product-info">
+                        <h3>Walnut Wood Bowl</h3>
+                        <p>Beautiful hand-turned walnut bowl for serving or decoration.</p>
+                        <span class="price">$149.99</span>
+                        <button class="btn-secondary">View Details</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Cherry Wood Picture Frame">
+                    <div class="product-info">
+                        <h3>Cherry Wood Picture Frame</h3>
+                        <p>Elegant cherry wood picture frame with natural finish.</p>
+                        <span class="price">$45.99</span>
+                        <button class="btn-secondary">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>About WoodCraft</h2>
+                <p>We specialize in creating high-quality wood products that bring warmth and beauty to your home. Each piece is carefully crafted by skilled artisans using premium materials and traditional techniques.</p>
+                <div class="features">
+                    <div class="feature">
+                        <h3>Handcrafted</h3>
+                        <p>Every product is made by hand with attention to detail</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Premium Materials</h3>
+                        <p>We use only the finest wood and materials</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Sustainable</h3>
+                        <p>Committed to environmentally responsible practices</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }));
+    </script>
+
+{% endblock %}

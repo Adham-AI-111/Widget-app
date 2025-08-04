@@ -1,0 +1,55 @@
+<nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>WoodCraft</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Gallery</a>
+                </li>
+                <!--  -->
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}" class="nav-link active">logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'signup' %}" class="nav-link active">signup</a>
+                </li>
+                {% endif %}
+                <!--  -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Admin</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+        
+        <!-- Flash Messages Container -->
+        <div class="flash-messages-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message flash-{{ message.tags }} {% if message.tags == 'error' %}flash-error{% elif message.tags == 'success' %}flash-success{% elif message.tags == 'warning' %}flash-warning{% elif message.tags == 'info' %}flash-info{% endif %}">
+                        <div class="flash-content">
+                            <span class="flash-icon">
+                                {% if message.tags == 'error' %}⚠️{% elif message.tags == 'success' %}✅{% elif message.tags == 'warning' %}⚠️{% elif message.tags == 'info' %}ℹ️{% endif %}
+                            </span>
+                            <span class="flash-text">{{ message }}</span>
+                        </div>
+                        <button class="flash-close" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </nav>
