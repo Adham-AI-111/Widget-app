@@ -118,3 +118,7 @@ AUTH_USER_MODEL = 'base.User'
 # Authentication settings
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
+
+# Media files (user uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
