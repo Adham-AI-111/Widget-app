@@ -17,19 +17,15 @@
             <div class="profile-info">
                 <div class="info-row">
                     <strong>Name:</strong>
-                    <span>John Doe</span>
+                    <span>{{user.full_name}}</span>
                 </div>
                 <div class="info-row">
                     <strong>Email:</strong>
-                    <span>john@example.com</span>
+                    <span>{{user.email}}</span>
                 </div>
                 <div class="info-row">
                     <strong>Phone:</strong>
-                    <span>+1-555-0123</span>
-                </div>
-                <div class="info-row">
-                    <strong>Address:</strong>
-                    <span>123 Main St, City, State 12345</span>
+                    <span>{{user.phone}}</span>
                 </div>
             </div>
             <button class="btn-secondary">Edit Profile</button>
@@ -84,21 +80,4 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    
-    <script>
-        // Mobile menu toggle
-        const hamburger = document.querySelector(".hamburger");
-        const navMenu = document.querySelector(".nav-menu");
-
-        hamburger.addEventListener("click", () => {
-            hamburger.classList.toggle("active");
-            navMenu.classList.toggle("active");
-        });
-
-        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
-            hamburger.classList.remove("active");
-            navMenu.classList.remove("active");
-        }));
-    </script>
 {% endblock %}

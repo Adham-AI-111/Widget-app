@@ -18,6 +18,20 @@
     {% include 'footer.html' %}
     
     <!-- Flash Messages JavaScript -->
-    <script src="{% static 'style/flash-messages.js' %}"></script>
+    <script src="{% static 'style/flash-messages.js' %}">
+        // Mobile menu toggle
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }));
+    </script>
 </body>
 </html> 

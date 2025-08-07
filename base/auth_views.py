@@ -36,9 +36,9 @@ def log_in(request):
             return render(request, 'base/register.html', context)  
     return render(request, 'base/register.html', context)
 
-@login_required(login_url='log_in')
+@login_required(login_url='login')
 def log_out(request):
     logout(request)
     messages.success(request, 'you logged out!')
-    return render(request, 'base/index.html')
+    return render(request, 'base/home.html')
 

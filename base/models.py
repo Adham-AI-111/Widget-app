@@ -41,17 +41,19 @@ class Order(models.Model):
 
     product = models.ForeignKey('Products', on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField()
+    amount = models.IntegerField(default=1)
     address = models.ForeignKey('Address', on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     due_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Address(models.Model):
-    # order = 
-    pass
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='addresses')
+    address = models.CharField(max_length=255)
+
 
 
 class Products(models.Model):
