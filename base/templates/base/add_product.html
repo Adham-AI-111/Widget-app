@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+{% block content %}
+    <!-- Add Product Section -->
+    <section class="add-product-section">
+        <div class="container">
+            <div class="product-form-container">
+                <div class="form-header">
+                    <h1>Add New Product</h1>
+                    <p class="form-subtitle">Create a new product listing for your artisan gallery</p>
+                </div>
+
+                <!-- Django Messages Container -->
+                <!-- {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %} -->
+
+                <!-- Django Form -->
+                <form class="product-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Basic Information -->
+                    <div class="form-grid">
+                        {% for field in form %}
+                        <div class="form-field">
+                            <label for="id_name" class="form-label">{{field.label}}<span class="required">*</span></label>
+                            {{field}}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Image Upload
+                    <div class="form-field full-width">
+                        <label for="id_image" class="form-label">Product Image <span class="required">*</span></label>
+                        <div class="file-upload-container">
+                            <div class="upload-icon">📸</div>
+                            <div class="upload-text">Click to select image</div>
+                            <div class="file-help">PNG, JPG, or WEBP (max. 5MB)</div>
+                            <input type="file" id="id_image" name="image" accept="image/*" required class="file-input">
+                        </div>
+                    </div> -->
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <a href="{% url 'admin' %}" class="btn-secondary">Cancel</a>
+                        <button type="submit" class="btn-primary">Add Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

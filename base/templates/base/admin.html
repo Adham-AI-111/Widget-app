@@ -110,10 +110,11 @@
         <!-- Product Management -->
         <div class="admin-section">
             <h3>Product Management</h3>
-            <button class="btn-primary" style="margin-bottom: 1rem;">Add New Product</button>
+            <a href="{% url 'add_product' %}" class="btn-primary" style="margin-bottom: 1rem;">Add New Product</a>
             <div class="table-container">
                 <table class="order-table">
                     <thead>
+                        <!-- table columns name -->
                         <tr>
                             <th>Product Name</th>
                             <th>Category</th>
@@ -123,40 +124,22 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
+                        <!-- rows content -->
+                        {% for product in products %}
                         <tr>
-                            <td>Oak Wood Cutting Board</td>
-                            <td>Kitchen</td>
-                            <td>$89.99</td>
-                            <td>15</td>
+                            <td>{{product.name}}</td>
+                            <td>NON</td>
+                            <td>$NON</td>
+                            <td>NON</td>
                             <td><span class="status-badge status-delivered">In Stock</span></td>
                             <td>
-                                <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</button>
-                                <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</button>
+                                <a class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
+                                <a class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Walnut Wood Bowl</td>
-                            <td>Home Decor</td>
-                            <td>$149.99</td>
-                            <td>8</td>
-                            <td><span class="status-badge status-delivered">In Stock</span></td>
-                            <td>
-                                <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</button>
-                                <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Pine Wood Wine Rack</td>
-                            <td>Kitchen</td>
-                            <td>$79.99</td>
-                            <td>0</td>
-                            <td><span class="status-badge status-pending">Out of Stock</span></td>
-                            <td>
-                                <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</button>
-                                <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</button>
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -166,10 +149,8 @@
         <div class="admin-section">
             <h3>Quick Actions</h3>
             <div class="action-buttons">
-                <button class="btn-primary">Process Pending Orders</button>
-                <button class="btn-secondary">Generate Reports</button>
-                <button class="btn-secondary">Update Inventory</button>
-                <button class="btn-secondary">Send Notifications</button>
+                <a href="{% url 'access_components' %}" class="btn-secondary">Access Components</a>
+                <a href="#" class="btn-secondary">Send Notifications</a>
             </div>
         </div>
     </div>

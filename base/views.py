@@ -13,3 +13,6 @@ def profile(request):
 
     context = {'user': user}
     return render(request, 'base/profile.html', context)
+
+def gallery(request):
+    return render(request, 'base/gallery.html')
