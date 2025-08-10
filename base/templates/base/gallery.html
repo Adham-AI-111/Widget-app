@@ -24,19 +24,22 @@
         <div class="container">
             <div class="products-grid" id="products-grid">
                 <!-- Kitchen Products -->
-                <div class="product-card" data-category="kitchen">
-                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Oak Wood Cutting Board">
+                {% for product in products %}
+                <div class="product-card">
+                    <img src="{{product.image}}">
                     <div class="product-info">
-                        <h3>Oak Wood Cutting Board</h3>
-                        <p>Handcrafted oak cutting board perfect for kitchen use. Made from premium oak wood with natural finish.</p>
-                        <div class="product-details">
+                        <h3>{{product.name}}</h3>
+                        <p>{{product.describe}}</p>
+                        <span class="material">Components: {{product.components}}</span>
+                        <!-- <div class="product-details">
                             <span class="material">Material: Oak Wood</span>
                             <span class="dimensions">Dimensions: 12" x 8" x 1"</span>
-                        </div>
-                        <span class="price">$89.99</span>
-                        <button class="btn-primary">Add to Cart</button>
+                        </div> -->
+                        <!-- <span class="price">$89.99</span> -->
+                        <a href="{% url 'get_product' product.id %}" class="btn-primary">Get Product</a>
                     </div>
                 </div>
+                {% endfor %}
 
                 <div class="product-card" data-category="kitchen">
                     <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Pine Wood Wine Rack">

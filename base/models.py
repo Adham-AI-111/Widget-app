@@ -35,41 +35,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Order(models.Model):
-    STATUS_CHOICES = (
-        ('pending', 'Pending'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
-    )
-
-    product = models.ForeignKey('Products', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField(default=1)
-    address = models.ForeignKey('Address', on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    due_date = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"Order {self.id} by {self.user.name} - {self.status}"
-
 
 class Address(models.Model):
     full_address = models.CharField(max_length=255)
 
-
-class Products(models.Model):
-    name = models.CharField(max_length=100)
-    describe = models.TextField()
-    image = models.ImageField(upload_to='products/')
-    # many to many relationship with Components, because a product can have multiple components and a component can belong to multiple products
-    components = models.ManyToManyField('Components', blank=True)
-
-    # TODO: get total price of product based on components
-    def __str__(self):
-        return self.name
 
 
 class Components(models.Model):
@@ -87,3 +56,38 @@ class Cps_details(models.Model):
 
     def __str__(self):
         return f"{self.part_name}: ${self.price:.2f}"
+    
+
+class Products(models.Model):
+    name = models.CharField(max_length=100)
+    describe = models.TextField()
+    image = models.ImageField(upload_to='products/')
+    # many to many relationship with Components, because a product can have multiple components and a component can belong to multiple products
+    components = models.ManyToManyField(Components, blank=True)
+
+    # TODO: get total price of product based on components
+    def __str__(self):
+        return self.name
+
+
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    )
+
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    components = models.ManyToManyField(Components, blank=True)
+    components_details = models.ManyToManyField(Cps_details, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=1)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    due_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Order {self.id} by {self.user.name} - {self.status}"

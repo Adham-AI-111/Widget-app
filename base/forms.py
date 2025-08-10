@@ -1,4 +1,4 @@
-from .models import User, Products, Components, Cps_details
+from .models import User, Products, Components, Cps_details, Order, Address
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -28,7 +28,7 @@ class SignupForm(UserCreationForm):
             raise forms.ValidationError("Passwords do not match")
         
         return cleaned_data
-    
+
 
 class CreateProductForm(forms.ModelForm):
     class Meta:
@@ -36,7 +36,9 @@ class CreateProductForm(forms.ModelForm):
         fields = ['name', 'describe', 'image','components']
         widgets = {
             'components': forms.CheckboxSelectMultiple(),
+            # or 'components': forms.SelectMultiple(),
         }
+
 
 
 class CreateComponentForm(forms.ModelForm):
@@ -62,3 +64,80 @@ class CreateCpsDetailsForm(forms.ModelForm):
         labels = {
             'part_name': 'Shape Name',
         }
+
+
+# class OrderForm(forms.ModelForm):
+#     class Meta:
+#         model = Order
+#         fields = ['components', 'amount', 'due_date']
+
+#     def __init__(self, product=None, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         if product is not None:
+#             self.fields['components'].queryset = Products.objects.filter(product=product)
+
+# forms.py
+# forms.py
+class OrderForm(forms.ModelForm):
+    def __init__(self, product=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        if product:
+            self.create_component_choice_fields(product)
+    
+    def create_component_choice_fields(self, product):
+        # Loop through all components of the product
+        for component in product.components.all():
+            field_name = f'component_{component.id}_choice'
+            
+            # Get choices for this component (its Cps_details)
+            choices = self.get_choices_for_component(component)
+            
+            self.fields[field_name] = forms.ChoiceField(
+                choices=choices,
+                required=False,
+                label=f"{component.item} Options",
+                widget=forms.Select(attrs={
+                    'class': 'form-control',
+                    'data-component-id': component.id
+                })
+            )
+    
+    def get_choices_for_component(self, component):
+        choices = [('', f'--- Select {component.item} ---')]
+        
+        # Add choices from Cps_details related to this component
+        for detail in component.cps_details_set.all():
+            choices.append((detail.id, f"{detail.part_name}: ${detail.price:.2f}"))
+        
+        return choices
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+            
+            # Handle the selected component details
+            selected_details = []
+            selected_components = []
+            
+            for field_name, value in self.cleaned_data.items():
+                if field_name.startswith('component_') and field_name.endswith('_choice') and value:
+                    try:
+                        detail = Cps_details.objects.get(id=value)
+                        selected_details.append(detail)
+                        selected_components.append(detail.component)
+                    except Cps_details.DoesNotExist:
+                        pass
+            
+            # Set the relationships
+            if selected_details:
+                instance.components_details.set(selected_details)
+            if selected_components:
+                instance.components.set(selected_components)
+        
+        return instance
+
+    class Meta:
+        model = Order
+        fields = ['amount', 'due_date']  # Removed 'components' from here

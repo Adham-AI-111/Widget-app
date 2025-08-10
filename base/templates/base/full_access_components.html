@@ -114,9 +114,9 @@
                         <div class="linking-grid">
                             <div class="component-list">
                                 <div class="list-header">Available Components</div>
-                                <div class="list-item selected">Base Frame - $25.00</div>
-                                <div class="list-item">Handle Assembly - $15.00</div>
-                                <div class="list-item">Decorative Panel - $30.00</div>
+                                {% for c in components %}
+                                <div class="list-item">{{c.item}}</div>
+                                {% endfor %}
                             </div>
 
                             <div class="shape-list">

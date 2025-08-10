@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CreateProductForm, CreateComponentForm, CreateCpsDetailsForm
-from .models import Products
+from .models import Products, Components, Cps_details
 
 @login_required(login_url='login')
 def admin(request):
@@ -24,6 +24,7 @@ def add_product(request):
 
 @login_required(login_url='login')
 def full_access_components(request):
+    components = Components.objects.all()
     form_1 = CreateComponentForm()
     form_2 = CreateCpsDetailsForm()
     if request.method == 'POST':
@@ -37,5 +38,5 @@ def full_access_components(request):
         if form_2.is_valid():
             form_2.save()
             return redirect('access_components')
-    context = {'form_1': form_1, 'form_2': form_2}
+    context = {'form_1': form_1, 'form_2': form_2, 'components': components}
     return render(request, 'base/full_access_components.html', context)
