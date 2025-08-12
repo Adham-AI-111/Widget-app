@@ -10,7 +10,7 @@ def admin(request):
     context = {'products': products}
     return render(request, 'base/admin.html', context)
 
-
+# ! ----------- PRODUCTS ----------- ! #
 @login_required(login_url='login')
 def add_product(request):
     if request.method == 'POST':
@@ -46,8 +46,9 @@ def delete_product(request, pk):
     return render(request, 'base/delete.html', context)
 
 
+# ! ----------- COMPONENTS ----------- ! #
 @login_required(login_url='login')
-def full_access_components(request):
+def full_access_components_shapes(request):
     components = Components.objects.all()
     form_1 = CreateComponentForm()
     form_2 = CreateCpsDetailsForm()
@@ -64,3 +65,25 @@ def full_access_components(request):
             return redirect('access_components')
     context = {'form_1': form_1, 'form_2': form_2, 'components': components}
     return render(request, 'base/full_access_components.html', context)
+
+
+def components_shapes(request):
+    components = Components.objects.all()
+    shapes = Cps_details.objects.all()
+    # Create a dictionary to hold component shapes
+    context = {'components': components, 'shapes': shapes}
+    return render(request, 'base/components&shapes.html', context)
+
+def delete_component(request, pk):
+    component = get_object_or_404(Components, id=pk)
+    if request.method == 'POST':
+        component.delete()
+        return redirect('components_shapes')
+    return render(request, 'base/delete.html')
+
+def delete_shape(request, pk):
+    shape = get_object_or_404(Cps_details, id=pk)
+    if request.method == 'POST':
+        shape.delete()
+        return redirect('components_shapes')
+    return render(request, 'base/delete.html')

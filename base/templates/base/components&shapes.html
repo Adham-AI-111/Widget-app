@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="admin-section">
+            <!--! Components !-->
+            <div class="table-section">
+                <h3>Components Management</h3>
+                <table class="data-table">
+                    <thead>
+                        <!-- table columns name -->
+                        <tr>
+                            <th>Component Name</th>
+                            <th>Price</th>
+                            <th>Shapes</th>
+                            <!-- <th>Stock</th> -->
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- rows content loop here-->
+                        {% for c in components %}
+                        <tr>
+                            <td>{{c.item}}</td>
+                            {% if c.price %}
+                            <td>${{c.price}}</td>
+                            {% else %}
+                            <td>$ --</td>
+                            {% endif %}
+                            <td>shapes</td>
+                            <td>
+                                <a href="#" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
+                                <!--! we won't to delete it, because it related to existing orders -->
+                                <!-- <a href="{% url 'delete_component' c.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!--! SHAPES !-->
+            <div class="table-section">
+                <h3>Shapes Management</h3>
+                <table class="data-table">
+                    <thead>
+                        <!-- table columns name -->
+                        <tr>
+                            <th>Component Shape</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- rows content loop here-->
+                        {% for shape in shapes %}
+                        <tr>
+                            <td>{{shape.part_name}}</td>
+                            <td>${{shape.price}}</td>
+                            <td>
+                                <a href="#" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
+                                <!--! we won't to delete it, because it related to existing orders -->
+                                <!-- <a href="{% url 'delete_shape' shape.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+{% endblock %}

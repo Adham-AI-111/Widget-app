@@ -1839,3 +1839,46 @@ border-top: 1px solid #eaddd7;
 .upload-icon .fas.fa-exclamation-triangle {
     color: #dc3545;
 }
+
+/* standard table */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eaddd7;
+}
+
+.data-table th {
+    background-color: #846358;
+    color: white;
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background-color: #fdf8f6;
+}
+
+/* Fix for navbar overlap */
+.table-section {
+    margin-top: 100px;
+    padding: 0 20px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .data-table {
+        font-size: 0.9rem;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 8px;
+    }
+}
