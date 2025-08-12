@@ -16,8 +16,8 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <h4>Total Orders</h4>
-                    <span class="stat-number">24</span>
-                    <p>This month</p>
+                    <span class="stat-number">{{orders.count}}</span>
+                    <!-- <p>This month</p> -->
                 </div>
                 <div class="stat-card">
                     <h4>Revenue</h4>
@@ -26,12 +26,12 @@
                 </div>
                 <div class="stat-card">
                     <h4>Pending Orders</h4>
-                    <span class="stat-number">8</span>
+                    <span class="stat-number">{{pending_orders.count}}</span>
                     <p>Need attention</p>
                 </div>
                 <div class="stat-card">
                     <h4>Products</h4>
-                    <span class="stat-number">12</span>
+                    <span class="stat-number">{{products.count}}</span>
                     <p>In inventory</p>
                 </div>
             </div>
@@ -149,7 +149,7 @@
         <div class="admin-section">
             <h3>Quick Actions</h3>
             <div class="action-buttons">
-                <a href="{% url 'access_components' %}" class="btn-secondary">Access Components</a>
+                <a href="{% url 'access_components' %}" class="btn-secondary">Link Components with Shapes</a>
                 <a href="{% url 'components_shapes' %}" class="btn-secondary">Show Components & Shapes</a>
                 <a href="#" class="btn-secondary">Send Notifications</a>
             </div>

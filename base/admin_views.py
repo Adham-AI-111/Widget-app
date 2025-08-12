@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CreateProductForm, CreateComponentForm, CreateCpsDetailsForm
-from .models import Products, Components, Cps_details
+from .models import Products, Components, Cps_details, Order
 from django.shortcuts import get_object_or_404
 
 @login_required(login_url='login')
 def admin(request):
     products = Products.objects.all()
-    context = {'products': products}
+    orders = Order.objects.all()
+    pending_orders = orders.filter(status='Pending')
+    context = {'products': products, 'orders': orders, 'pending_orders': pending_orders}
     return render(request, 'base/admin.html', context)
 
 # ! ----------- PRODUCTS ----------- ! #
