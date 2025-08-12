@@ -1815,3 +1815,27 @@ border-top: 1px solid #eaddd7;
     flex-direction: column;
 }
 }
+
+/* delete page */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.upload-icon .fas.fa-exclamation-triangle {
+    color: #dc3545;
+}

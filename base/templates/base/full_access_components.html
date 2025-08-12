@@ -11,23 +11,6 @@
                     <p class="page-subtitle">Define components, their shapes, and calculate pricing based on configurations</p>
                 </div>
 
-                <!-- Steps Indicator -->
-                <div class="steps-indicator">
-                    <div class="step active">
-                        <div class="step-number">1</div>
-                        <span>Add Components</span>
-                    </div>
-                    <div class="step pending">
-                        <div class="step-number">2</div>
-                        <span>Define Shapes</span>
-                    </div>
-                    <div class="step pending">
-                        <div class="step-number">3</div>
-                        <span>Link & Calculate</span>
-                    </div>
-                </div>
-                <!-- ?---------- -->
-
                 <!-- forms container -->
                 <form method="post">
                     <!-- Step 1: Product Components -->
@@ -95,69 +78,6 @@
 
                         <button type="button" class="add-shape-btn">+ Add Another Shape</button>
                         <button type="submit" class="btn-primary">save shapes</button>
-                    </div>
-
-                    <!-- Step 3: Component-Shape Linking -->
-                    <div class="form-section">
-                        <div class="section-header">
-                            <div class="section-title">
-                                <span class="section-icon">🔗</span>
-                                Link Components & Shapes
-                            </div>
-                            <div class="section-status status-pending">Pending</div>
-                        </div>
-
-                        <p class="help-text">
-                            Select which shapes are available for each component to calculate final pricing
-                        </p>
-
-                        <div class="linking-grid">
-                            <div class="component-list">
-                                <div class="list-header">Available Components</div>
-                                {% for c in components %}
-                                <div class="list-item">{{c.item}}</div>
-                                {% endfor %}
-                            </div>
-
-                            <div class="shape-list">
-                                <div class="list-header">Available Shapes</div>
-                                <div class="list-item">Rectangular (Simple) - +$5.00</div>
-                                <div class="list-item selected">Oval (Moderate) - +$12.00</div>
-                                <div class="list-item">Custom Curved (Complex) - +$25.00</div>
-                            </div>
-                        </div>
-
-                        <div class="link-arrow">↔</div>
-
-                        <!-- Pricing Summary -->
-                        <div class="summary-box">
-                            <div class="summary-title">🧮 Pricing Calculation</div>
-                            <div class="summary-item">
-                                <span>Selected Component:</span>
-                                <span>Base Frame</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Base Cost:</span>
-                                <span>$25.00</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Selected Shape:</span>
-                                <span>Oval (Moderate)</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Shape Cost:</span>
-                                <span>$12.00</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Complexity Multiplier:</span>
-                                <span>1.5x</span>
-                            </div>
-                            <hr class="summary-divider">
-                            <div class="summary-item summary-total">
-                                <span>Total Component Cost:</span>
-                                <span>$55.50</span>
-                            </div>
-                        </div>
                     </div>
 
                     <!--! Form Actions -->

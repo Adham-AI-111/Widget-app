@@ -66,18 +66,6 @@ class CreateCpsDetailsForm(forms.ModelForm):
         }
 
 
-# class OrderForm(forms.ModelForm):
-#     class Meta:
-#         model = Order
-#         fields = ['components', 'amount', 'due_date']
-
-#     def __init__(self, product=None, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         if product is not None:
-#             self.fields['components'].queryset = Products.objects.filter(product=product)
-
-# forms.py
-# forms.py
 class OrderForm(forms.ModelForm):
     def __init__(self, product=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -93,6 +81,7 @@ class OrderForm(forms.ModelForm):
             # Get choices for this component (its Cps_details)
             choices = self.get_choices_for_component(component)
             
+            # generate a choice field for each component
             self.fields[field_name] = forms.ChoiceField(
                 choices=choices,
                 required=False,
@@ -141,3 +130,6 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['amount', 'due_date']  # Removed 'components' from here
+        widgets = {
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+        }

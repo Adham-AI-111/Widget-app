@@ -27,7 +27,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     
     objects = UserManager()
-    
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_name']
 
@@ -35,10 +35,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-
 class Address(models.Model):
     full_address = models.CharField(max_length=255)
-
 
 
 class Components(models.Model):
@@ -73,6 +71,7 @@ class Products(models.Model):
 class Order(models.Model):
     STATUS_CHOICES = (
         ('pending', 'Pending'),
+        ('In progress', 'In progress'),
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     )

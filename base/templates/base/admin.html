@@ -135,8 +135,8 @@
                             <td>NON</td>
                             <td><span class="status-badge status-delivered">In Stock</span></td>
                             <td>
-                                <a class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
-                                <a class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a>
+                                <a href="{% url 'edit_product' product.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
+                                <a href="{% url 'delete_product' product.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a>
                             </td>
                         </tr>
                         {% endfor %}

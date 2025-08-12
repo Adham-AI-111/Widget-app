@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CreateProductForm, CreateComponentForm, CreateCpsDetailsForm
 from .models import Products, Components, Cps_details
+from django.shortcuts import get_object_or_404
 
 @login_required(login_url='login')
 def admin(request):
@@ -21,6 +22,29 @@ def add_product(request):
         form = CreateProductForm()
     context = {'form': form}
     return render(request, 'base/add_product.html', context)
+
+
+@login_required(login_url='login')
+def edit_product(request, pk):
+    product = get_object_or_404(Products, id=pk)
+    if request.method == 'POST':
+        form = CreateProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('admin')
+    else:
+        form = CreateProductForm(instance=product)
+    context = {'form': form, 'product': product}
+    return render(request, 'base/add_product.html', context)
+
+def delete_product(request, pk):
+    product = get_object_or_404(Products, id=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('admin')
+    context = {'product': product}
+    return render(request, 'base/delete.html', context)
+
 
 @login_required(login_url='login')
 def full_access_components(request):
