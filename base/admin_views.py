@@ -72,20 +72,36 @@ def full_access_components_shapes(request):
 def components_shapes(request):
     components = Components.objects.all()
     shapes = Cps_details.objects.all()
-    # Create a dictionary to hold component shapes
-    context = {'components': components, 'shapes': shapes}
+    # Prefetch related shapes for each component to avoid N+1 query problem
+    # This will allow us to access shapes related to each component without additional queries
+    component_shapes = components.prefetch_related('cps_details_set')
+    context = {'components': components, 'shapes': shapes, 'component_shapes': component_shapes}
     return render(request, 'base/components&shapes.html', context)
 
-def delete_component(request, pk):
+
+@login_required(login_url='login')
+def edit_component(request, pk):
     component = get_object_or_404(Components, id=pk)
     if request.method == 'POST':
-        component.delete()
-        return redirect('components_shapes')
-    return render(request, 'base/delete.html')
+        form = CreateComponentForm(request.POST, instance=component)
+        if form.is_valid():
+            form.save()
+            return redirect('components_shapes')
+    else:
+        form = CreateComponentForm(instance=component)
+    context = {'form': form, 'component': component}
+    return render(request, 'base/edit_component.html', context)
 
-def delete_shape(request, pk):
+
+@login_required(login_url='login')
+def edit_shape(request, pk):
     shape = get_object_or_404(Cps_details, id=pk)
     if request.method == 'POST':
-        shape.delete()
-        return redirect('components_shapes')
-    return render(request, 'base/delete.html')
+        form = CreateCpsDetailsForm(request.POST, instance=shape)
+        if form.is_valid():
+            form.save()
+            return redirect('components_shapes')
+    else:
+        form = CreateCpsDetailsForm(instance=shape)
+    context = {'form': form, 'shape': shape}
+    return render(request, 'base/edit_shape.html', context)

@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="config-container">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-section">
+                <div class="shapes-container">
+                    <div class="shape-item">
+                        <div class="shape-header">
+                            <div class="shape-title">edit shape</div>
+                        </div>
+
+                        <!-- loop here -->
+                        {% for field in form %}
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label class="form-label">{{field.label}}<span class="required">*</span></label>
+                                {{field}}
+                                {% if field.errors %}
+                                    <div class="field-error">
+                                        {% for error in field.errors %}
+                                            <span class="error-message">{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            <!--! Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Save Configuration</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

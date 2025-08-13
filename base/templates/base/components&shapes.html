@@ -27,11 +27,10 @@
                             {% else %}
                             <td>$ --</td>
                             {% endif %}
-                            <td>shapes</td>
+                            <td>{{component_shapes}}</td>
                             <td>
-                                <a href="#" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
+                                <a href="{% url 'edit_component' c.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
                                 <!--! we won't to delete it, because it related to existing orders -->
-                                <!-- <a href="{% url 'delete_component' c.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a> -->
                             </td>
                         </tr>
                         {% endfor %}
@@ -61,7 +60,6 @@
                             <td>
                                 <a href="#" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
                                 <!--! we won't to delete it, because it related to existing orders -->
-                                <!-- <a href="{% url 'delete_shape' shape.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; background-color: #dc3545; color: white;">Delete</a> -->
                             </td>
                         </tr>
                         {% endfor %}

@@ -66,22 +66,19 @@ class CreateCpsDetailsForm(forms.ModelForm):
         }
 
 
+# ! new form after updates 
 class OrderForm(forms.ModelForm):
-    def __init__(self, product=None, *args, **kwargs):
+    def __init__(self, *args, product=None, **kwargs):
         super().__init__(*args, **kwargs)
         
         if product:
             self.create_component_choice_fields(product)
     
     def create_component_choice_fields(self, product):
-        # Loop through all components of the product
         for component in product.components.all():
             field_name = f'component_{component.id}_choice'
-            
-            # Get choices for this component (its Cps_details)
             choices = self.get_choices_for_component(component)
             
-            # generate a choice field for each component
             self.fields[field_name] = forms.ChoiceField(
                 choices=choices,
                 required=False,
@@ -94,11 +91,8 @@ class OrderForm(forms.ModelForm):
     
     def get_choices_for_component(self, component):
         choices = [('', f'--- Select {component.item} ---')]
-        
-        # Add choices from Cps_details related to this component
         for detail in component.cps_details_set.all():
             choices.append((detail.id, f"{detail.part_name}: ${detail.price:.2f}"))
-        
         return choices
 
     def save(self, commit=True):
@@ -106,30 +100,26 @@ class OrderForm(forms.ModelForm):
         if commit:
             instance.save()
             
-            # Handle the selected component details
+            # Only handle components_details - no need for separate components
             selected_details = []
-            selected_components = []
             
             for field_name, value in self.cleaned_data.items():
                 if field_name.startswith('component_') and field_name.endswith('_choice') and value:
                     try:
                         detail = Cps_details.objects.get(id=value)
                         selected_details.append(detail)
-                        selected_components.append(detail.component)
                     except Cps_details.DoesNotExist:
                         pass
             
-            # Set the relationships
+            # Set only the details relationship
             if selected_details:
                 instance.components_details.set(selected_details)
-            if selected_components:
-                instance.components.set(selected_components)
         
         return instance
 
     class Meta:
         model = Order
-        fields = ['amount', 'due_date']  # Removed 'components' from here
+        fields = ['amount', 'due_date']  # Remove 'components' from here
         widgets = {
             'due_date': forms.DateInput(attrs={'type': 'date'}),
         }

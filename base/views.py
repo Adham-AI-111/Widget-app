@@ -42,7 +42,8 @@ def get_product(request, pk):
         if form.is_valid():
             order = form.save(commit=False)  
             order.user = user
-            # order.product = product
+            order.product = product
+            order.save()
             messages.success(request, "Product requested successfully.")
         return redirect('gallery')
     else:
