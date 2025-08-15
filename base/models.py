@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
+import datetime
 
 class UserManager(BaseUserManager):
     def create_user(self, email, full_name, password=None, **extra_fields):
@@ -35,13 +36,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Address(models.Model):
-    full_address = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.full_address
-
-
 class Components(models.Model):
     item = models.CharField(max_length=100)
     salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -70,6 +64,7 @@ class Products(models.Model):
     describe = models.TextField()
     image = models.ImageField(upload_to='products/')
     components = models.ManyToManyField(Components, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -88,16 +83,17 @@ class Products(models.Model):
 
 class Order(models.Model):
     STATUS_CHOICES = (
-        ('pending', 'Pending'),
+        ('Pending', 'Pending'),
         ('In progress', 'In progress'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled'),
     )
 
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
     components_details = models.ManyToManyField(Cps_details, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField(default=1)
+    full_address = models.CharField(max_length=255, default='', blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     due_date = models.DateTimeField()

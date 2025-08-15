@@ -26,7 +26,7 @@
                 <!-- Kitchen Products -->
                 {% for product in products %}
                 <div class="product-card">
-                    <img src="{{product.image}}">
+                    <img src="{{product.image.url}}">
                     <div class="product-info">
                         <h3>{{product.name}}</h3>
                         <p>{{product.describe}}</p>

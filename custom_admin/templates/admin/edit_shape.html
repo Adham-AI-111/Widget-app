@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% block content %}
+<section class="product-config-section">
+    <div class="container">
+        <div class="config-container">
+            <form method="post">
+                {% csrf_token %}
+                <!-- loop here -->
+                {% for field in form %}
+                <div class="form-row">
+                    <div class="form-field">
+                        <label class="form-label">{{field.label}}<span class="required">*</span></label>
+                        {{field}}
+                        <!-- !-- to display errors --! -->
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {% for error in field.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!--! Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Save Configuration</button>
+                    <a href="{% url 'components_shapes' %}" class="btn-secondary">cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,8 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CreateProductForm, CreateComponentForm, CreateCpsDetailsForm
-from .models import Products, Components, Cps_details, Order
+from base.models import Products, Components, Cps_details, Order
 from django.shortcuts import get_object_or_404
+
+@login_required
+def admin_cards(request):
+    orders = Order.objects.all()
+    pending_orders = orders.filter(status='Pending')
+    context = {'orders': orders, 'pending_orders': pending_orders}
+    return render(request, 'admin/admin_cards.html', context)
+
+@login_required
+def admin_orders(request):
+    orders = Order.objects.all()
+    context = {'orders': orders}
+    return render(request, 'admin/admin_orders.html', context)
+
+@login_required
+def admin_products(request):
+    products = Products.objects.all()
+    context = {'products': products}
+    return render(request, 'admin/admin_products.html', context)
 
 @login_required(login_url='login')
 def admin(request):
@@ -10,7 +29,7 @@ def admin(request):
     orders = Order.objects.all()
     pending_orders = orders.filter(status='Pending')
     context = {'products': products, 'orders': orders, 'pending_orders': pending_orders}
-    return render(request, 'base/admin.html', context)
+    return render(request, 'admin/admin.html', context)
 
 # ! ----------- PRODUCTS ----------- ! #
 @login_required(login_url='login')
@@ -23,7 +42,7 @@ def add_product(request):
     else :
         form = CreateProductForm()
     context = {'form': form}
-    return render(request, 'base/add_product.html', context)
+    return render(request, 'admin/add_product.html', context)
 
 
 @login_required(login_url='login')
@@ -37,7 +56,7 @@ def edit_product(request, pk):
     else:
         form = CreateProductForm(instance=product)
     context = {'form': form, 'product': product}
-    return render(request, 'base/add_product.html', context)
+    return render(request, 'admin/add_product.html', context)
 
 def delete_product(request, pk):
     product = get_object_or_404(Products, id=pk)
@@ -45,7 +64,7 @@ def delete_product(request, pk):
         product.delete()
         return redirect('admin')
     context = {'product': product}
-    return render(request, 'base/delete.html', context)
+    return render(request, 'admin/delete.html', context)
 
 
 # ! ----------- COMPONENTS ----------- ! #
@@ -66,17 +85,15 @@ def full_access_components_shapes(request):
             form_2.save()
             return redirect('access_components')
     context = {'form_1': form_1, 'form_2': form_2, 'components': components}
-    return render(request, 'base/full_access_components.html', context)
+    return render(request, 'admin/full_access_components.html', context)
 
 
+@login_required(login_url='login')
 def components_shapes(request):
     components = Components.objects.all()
     shapes = Cps_details.objects.all()
-    # Prefetch related shapes for each component to avoid N+1 query problem
-    # This will allow us to access shapes related to each component without additional queries
-    component_shapes = components.prefetch_related('cps_details_set')
-    context = {'components': components, 'shapes': shapes, 'component_shapes': component_shapes}
-    return render(request, 'base/components&shapes.html', context)
+    context = {'components': components, 'shapes': shapes}
+    return render(request, 'admin/components&shapes.html', context)
 
 
 @login_required(login_url='login')
@@ -90,7 +107,7 @@ def edit_component(request, pk):
     else:
         form = CreateComponentForm(instance=component)
     context = {'form': form, 'component': component}
-    return render(request, 'base/edit_component.html', context)
+    return render(request, 'admin/edit_component.html', context)
 
 
 @login_required(login_url='login')
@@ -104,4 +121,4 @@ def edit_shape(request, pk):
     else:
         form = CreateCpsDetailsForm(instance=shape)
     context = {'form': form, 'shape': shape}
-    return render(request, 'base/edit_shape.html', context)
+    return render(request, 'admin/edit_shape.html', context)

@@ -27,7 +27,18 @@
                             {% else %}
                             <td>$ --</td>
                             {% endif %}
-                            <td>{{component_shapes}}</td>
+                            <td>
+                                {% if c.cps_details_set.all %}
+                                    <ul>
+                                        {% for shape in c.cps_details_set.all %}
+                                            <li>{{ shape.part_name }} - ${{ shape.price }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    No shapes available
+                                {% endif %}
+                            </td>
+                            
                             <td>
                                 <a href="{% url 'edit_component' c.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
                                 <!--! we won't to delete it, because it related to existing orders -->
@@ -58,7 +69,7 @@
                             <td>{{shape.part_name}}</td>
                             <td>${{shape.price}}</td>
                             <td>
-                                <a href="#" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
+                                <a href="{% url 'edit_shape' shape.id %}" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem;">Edit</a>
                                 <!--! we won't to delete it, because it related to existing orders -->
                             </td>
                         </tr>
@@ -67,5 +78,7 @@
                 </table>
             </div>
         </div>
+
+{% include 'quick_access.html' %}
 
 {% endblock %}

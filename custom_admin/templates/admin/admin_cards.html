@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<section class="admin-header">
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Manage orders, products, and customer information</p>
+    </div>
+</section>
+<div class="admin-content">
+        <!-- Dashboard Stats -->
+        <div class="admin-section">
+            <h3>Dashboard Overview</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total Orders</h4>
+                    <span class="stat-number">{{orders.count}}</span>
+                    <!-- <p>This month</p> -->
+                </div>
+                <div class="stat-card">
+                    <h4>Revenue</h4>
+                    <span class="stat-number">$3,456</span>
+                    <p>This month</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Pending Orders</h4>
+                    <span class="stat-number">{{pending_orders.count}}</span>
+                    <p>Need attention</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Products</h4>
+                    <span class="stat-number">{{products.count}}</span>
+                    <p>In inventory</p>
+                </div>
+            </div>
+        </div>
+</div>
+
+{% include 'quick_access.html' %}
+
+{% endblock %}

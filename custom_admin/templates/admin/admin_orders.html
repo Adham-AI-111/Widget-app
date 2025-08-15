@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="admin-content">
+    <div class="admin-section">
+        <h3>Order Management</h3>
+        
+        <!-- Search and Filter Controls -->
+        <div class="admin-controls">
+            <input type="text" class="search-box" placeholder="Search orders by customer name, order ID, or product..." id="orderSearch">
+            <select class="filter-select" id="statusFilter">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+            </select>
+        </div>
+
+        <!-- Orders Cards Container -->
+        <div class="admin-cards-container" id="ordersContainer">
+            {% for order in orders %}
+            <div class="admin-card order-card status-{{order.status}}" data-status="{{order.status}}" data-customer="{{order.user.full_name|lower}}" data-order-id="{{order.id|lower}}">
+                <div class="card-header">
+                    <span class="card-id">{{order.id}}</span>
+                    <span class="card-date">{{order.due_date}}</span>
+                </div>
+                
+                <div class="card-body">
+                    <div class="customer-info">
+                        <span class="customer-name">{{order.user.full_name}}</span>
+                        <span class="customer-email">{{order.user.email}}</span>
+                    </div>
+                    
+                    <div class="product-list">
+                        <div class="product-item">{{order.product}} ({{order.amount}})</div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <span class="status-badge status-{{order.status}}">{{order.status|title}}</span>
+                    <span class="card-price">${{order.total_price}}</span>
+                    <div class="card-actions">
+                        <a href="#" class="card-btn card-btn-view">View</a>
+                        <a href="#" class="card-btn card-btn-edit">Edit</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Empty State (hidden by default, show when no results) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-icon">📦</div>
+            <h4>No orders found</h4>
+            <p>Try adjusting your search or filter criteria.</p>
+        </div>
+    </div>
+</div>
+
+
+{% include 'quick_access.html' %}
+
+{% endblock %}

@@ -1,3 +1,5 @@
+/* table-container, order-table, table-section, data-table */
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -557,29 +559,6 @@ body {
     color: #43302b;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
-}
-
-.order-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.order-table th,
-.order-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eaddd7;
-}
-
-.order-table th {
-    background-color: #f2e8e5;
-    color: #43302b;
-    font-weight: 600;
-}
-
-.order-table tr:hover {
-    background-color: #fdf8f6;
 }
 
 .status-badge {
@@ -1157,15 +1136,6 @@ body {
     .filter-buttons {
         flex-direction: column;
         align-items: center;
-    }
-
-    .order-table {
-        font-size: 0.9rem;
-    }
-
-    .order-table th,
-    .order-table td {
-        padding: 8px;
     }
 
     .signin-container {
@@ -1880,5 +1850,333 @@ border-top: 1px solid #eaddd7;
     .data-table th,
     .data-table td {
         padding: 8px;
+    }
+}
+
+/* for admin new display */
+/* NEW ADMIN CARD SYSTEM CLASSES - Add these to your existing style.css */
+
+.admin-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(67, 48, 43, 0.08);
+    border: 1px solid #f2e8e5;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(67, 48, 43, 0.15);
+    border-color: #eaddd7;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f2e8e5;
+}
+
+.card-id {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #846358;
+    background: #f2e8e5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+}
+
+.card-date {
+    font-size: 0.85rem;
+    color: #846358;
+    opacity: 0.8;
+}
+
+.card-body {
+    margin-bottom: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #43302b;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.card-subtitle {
+    font-size: 0.9rem;
+    color: #846358;
+    margin-bottom: 0.75rem;
+}
+
+.card-info {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #846358;
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 0.9rem;
+    color: #43302b;
+    font-weight: 500;
+}
+
+.card-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #846358;
+}
+
+.card-footer {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.card-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.card-btn-edit {
+    background-color: #846358;
+    color: white;
+    border: 1px solid #846358;
+}
+
+.card-btn-edit:hover {
+    background-color: #977669;
+    transform: translateY(-1px);
+}
+
+.card-btn-delete {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+.card-btn-delete:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+.card-btn-view {
+    background-color: #f2e8e5;
+    color: #846358;
+    border: 1px solid #eaddd7;
+}
+
+.card-btn-view:hover {
+    background-color: #eaddd7;
+}
+
+/* Order specific styles */
+.order-card {
+    border-left: 4px solid #846358;
+}
+
+.order-card.status-pending {
+    border-left-color: #856404;
+}
+
+.order-card.status-processing {
+    border-left-color: #0c5460;
+}
+
+.order-card.status-shipped {
+    border-left-color: #155724;
+}
+
+.order-card.status-delivered {
+    border-left-color: #0f5132;
+}
+
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: #43302b;
+}
+
+.customer-email {
+    font-size: 0.85rem;
+    color: #846358;
+    opacity: 0.8;
+}
+
+.product-list {
+    background: #fdf8f6;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin: 0.5rem 0;
+}
+
+.product-item {
+    font-size: 0.9rem;
+    color: #43302b;
+    margin-bottom: 0.25rem;
+}
+
+.product-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Product specific styles */
+.product-card {
+    border-left: 4px solid #846358;
+}
+
+.product-image-placeholder {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, #f2e8e5 0%, #eaddd7 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: #846358;
+    font-size: 2rem;
+}
+
+/* Filter and search bar */
+.admin-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 250px;
+    padding: 10px 16px;
+    border: 2px solid #eaddd7;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fdf8f6;
+    font-family: inherit;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: #846358;
+    background-color: white;
+}
+
+.filter-select {
+    padding: 10px 16px;
+    border: 2px solid #eaddd7;
+    border-radius: 8px;
+    background-color: white;
+    color: #43302b;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #846358;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Responsive design for cards */
+@media (max-width: 768px) {
+    .admin-cards-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .admin-card {
+        padding: 1.25rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .card-actions {
+        margin-left: 0;
+        justify-content: center;
+    }
+
+    .admin-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .card-btn {
+        text-align: center;
+        padding: 8px 12px;
     }
 }
