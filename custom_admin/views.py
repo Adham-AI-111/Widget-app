@@ -79,8 +79,6 @@ def admin_cards(request):
 def admin_orders(request):
     orders = Order.objects.all()
 
-    # TODO filter based on is paid or not
-
     # Search functionality
     q = request.GET.get('q', '')
     q_search = Q()
