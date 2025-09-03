@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.db.models import F
 from base.services.pagination import paginate_queryset
 
-
+# here is admin decorator
 def admin_required(view_func):
     @login_required
     def _wrapped_view(request, *args, **kwargs):
