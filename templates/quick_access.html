@@ -1,12 +1,55 @@
-<!-- Quick Actions -->
-<div class="admin-section">
-    <h3>Quick Actions</h3>
-    <div class="action-buttons">
-        <a href="{% url 'admin_cards' %}" class="btn-secondary">Main Page</a>
-        <a href="{% url 'admin_orders' %}" class="btn-secondary">Preview Orders</a>
-        <a href="{% url 'admin_products' %}" class="btn-secondary">Preview Products</a>
-        <a href="{% url 'components_shapes' %}" class="btn-secondary">Show Components & Shapes</a>
-        <a href="{% url 'access_components' %}" class="btn-secondary">Link Components with Shapes</a>
-        <a href="#" class="btn-secondary">Send Notifications</a>
+<!-- Admin Floating Action Button (FAB) -->
+<div class="admin-fab" aria-label="Admin quick actions">
+    <button class="admin-fab-toggle" type="button" aria-expanded="false" aria-controls="adminFabMenu">☰</button>
+    <div id="adminFabMenu" class="admin-fab-menu" hidden>
+        <a href="{% url 'admin_cards' %}" class="admin-fab-item">Main Page</a>
+        <a href="{% url 'admin_orders' %}" class="admin-fab-item">Preview Orders</a>
+        <a href="{% url 'add_order' %}" class="admin-fab-item">Add Order</a>
+        <a href="{% url 'delay_orders' %}" class="admin-fab-item">Delayed balances</a>
     </div>
+    <div class="admin-fab-backdrop" hidden></div>
+    <script>
+    (function(){
+        var container = document.currentScript && document.currentScript.parentElement;
+        if (!container) return;
+        var toggle = container.querySelector('.admin-fab-toggle');
+        var menu = container.querySelector('#adminFabMenu');
+        var backdrop = container.querySelector('.admin-fab-backdrop');
+        if (!toggle || !menu || !backdrop) return;
+        function openMenu(){
+            menu.hidden = false;
+            backdrop.hidden = false;
+            toggle.setAttribute('aria-expanded','true');
+            container.classList.add('open');
+        }
+        function closeMenu(){
+            menu.hidden = true;
+            backdrop.hidden = true;
+            toggle.setAttribute('aria-expanded','false');
+            container.classList.remove('open');
+        }
+        toggle.addEventListener('click', function(){
+            if (menu.hidden) { openMenu(); } else { closeMenu(); }
+        });
+        backdrop.addEventListener('click', closeMenu);
+        // Close when any action link is clicked
+        menu.querySelectorAll('a').forEach(function(link){
+            link.addEventListener('click', function(){
+                closeMenu();
+            });
+        });
+        // Click outside closes
+        document.addEventListener('click', function(e){
+            if (!container.contains(e.target) && !menu.hidden) {
+                closeMenu();
+            }
+        });
+        // ESC closes
+        document.addEventListener('keydown', function(e){
+            if (e.key === 'Escape' && !menu.hidden) {
+                closeMenu();
+            }
+        });
+    })();
+    </script>
 </div>

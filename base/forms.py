@@ -1,4 +1,4 @@
-from .models import User, Products, Components, Cps_details, Order
+from .models import User, Order, OrderImages
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -30,60 +30,53 @@ class SignupForm(UserCreationForm):
         return cleaned_data
 
 
-# ! new form after updates 
-class OrderForm(forms.ModelForm):
-    def __init__(self, *args, product=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        
-        if product:
-            self.create_component_choice_fields(product)
-    
-    def create_component_choice_fields(self, product):
-        for component in product.components.all():
-            field_name = f'component_{component.id}_choice'
-            choices = self.get_choices_for_component(component)
-            
-            self.fields[field_name] = forms.ChoiceField(
-                choices=choices,
-                required=False,
-                label=f"{component.item} Options",
-                widget=forms.Select(attrs={
-                    'class': 'form-control',
-                    'data-component-id': component.id
-                })
-            )
-    
-    def get_choices_for_component(self, component):
-        choices = [('', f'--- Select {component.item} ---')]
-        for detail in component.cps_details_set.all():
-            choices.append((detail.id, f"{detail.part_name}: ${detail.price:.2f}"))
-        return choices
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['full_name', 'email', 'phone']
 
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        if commit:
-            instance.save()
-            
-            # Only handle components_details - no need for separate components
-            selected_details = []
-            
-            for field_name, value in self.cleaned_data.items():
-                if field_name.startswith('component_') and field_name.endswith('_choice') and value:
-                    try:
-                        detail = Cps_details.objects.get(id=value)
-                        selected_details.append(detail)
-                    except Cps_details.DoesNotExist:
-                        pass
-            
-            # Set only the details relationship
-            if selected_details:
-                instance.components_details.set(selected_details)
-        
-        return instance
 
+class GetOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['amount', 'due_date']  # Remove 'components' from here
-        widgets = {
-            'due_date': forms.DateInput(attrs={'type': 'date'}),
+        fields = ['details', 'image', 'full_address', 'deposit', 'is_quick']
+        labels = {
+            'is_quick': 'quick order'
         }
+        widgets = {
+            'is_quick': forms.CheckboxInput(attrs={'class': 'toggle-checkbox', 'id': 'is_quick_toggle'}),
+        }
+
+# !---->
+# class OrderImageForm(forms.ModelForm):
+#     images = forms.FileField(
+#         widget=forms.FileInput(attrs={
+#             'multiple': True,
+#             'accept': 'image/*',
+#             'class': 'form-control'
+#         }),
+#         help_text='Select multiple images (max 5)'
+#     )
+    
+    
+#     class Meta:
+#         model = OrderImages
+#         fields = ['image']  # ← Keep this as 'image' (the actual model field)
+    
+#     def clean_images(self):  # ← Validation for the 'images' field
+#         files = self.files.getlist('images')
+        
+#         if not files:
+#             raise forms.ValidationError("Please select at least one image")
+        
+#         if len(files) > 5:  # ← Limit to 5 images
+#             raise forms.ValidationError("Maximum 5 images allowed")
+        
+#         for file in files:
+#             if file.size > 2 * 1024 * 1024:  # 2MB limit per file
+#                 raise forms.ValidationError(f"File {file.name} is too large (max 2MB)")
+            
+#             if not file.content_type.startswith('image/'):
+#                 raise forms.ValidationError(f"{file.name} is not a valid image file")
+        
+#         return files

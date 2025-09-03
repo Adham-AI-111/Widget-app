@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% block content %}
+
+    <div class="form-order">
+        <h2>First Step -- order details</h2>        
+        <form method="POST" action="">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-field {% if field.errors %}is-invalid{% endif %}">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                <!-- for Form valiadation errors -->
+                {% if field.errors %}
+                    <div class="field-error">
+                        {% for error in field.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-primary">Go To The Second Step</button>
+        </form>
+    </div>
+
+{% endblock %}

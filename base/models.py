@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
+from django.core.exceptions import ValidationError
+from django.db.models import Prefetch, Sum
 
 class UserManager(BaseUserManager):
     def create_user(self, email, full_name, password=None, **extra_fields):
@@ -22,7 +24,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=100, blank=False)
     email = models.EmailField(unique=True)
-    phone = PhoneNumberField(blank=True, null=True)
+    phone = PhoneNumberField(region='EG' ,blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -33,105 +35,133 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['full_name']
 
     def __str__(self):
-        return self.email
+        return f'{self.full_name} [{self.email}]'
 
 
-class Components(models.Model):
-    item = models.CharField(max_length=100)
-    salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+# class Components(models.Model):
+#     item = models.CharField(max_length=100)
+#     salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    def __str__(self): 
-        return f"{self.item}"
+#     def __str__(self): 
+#         return f"{self.item}"
 
-    class Meta:
-        verbose_name_plural = "Components"
+#     class Meta:
+#         verbose_name_plural = "Components"
 
 
-class Cps_details(models.Model):
-    component = models.ForeignKey(Components, on_delete=models.CASCADE)
-    part_name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+# class Cps_details(models.Model):
+#     component = models.ForeignKey(Components, on_delete=models.CASCADE)
+#     part_name = models.CharField(max_length=100)
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    def __str__(self):
-        return f"{self.part_name}: ${self.price:.2f}"
+#     def __str__(self):
+#         return f"{self.part_name}: ${self.price:.2f}"
     
-    class Meta:
-        verbose_name_plural = "Component Details"
+#     class Meta:
+#         verbose_name_plural = "Component Details"
 
 
-class Products(models.Model):
-    name = models.CharField(max_length=100)
-    describe = models.TextField()
-    image = models.ImageField(upload_to='products/')
-    components = models.ManyToManyField(Components, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class Products(models.Model):
+#     name = models.CharField(max_length=100)
+#     describe = models.TextField()
+#     image = models.ImageField(upload_to='products/')
+#     components = models.ManyToManyField(Components, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
     
-    @property
-    def base_price(self):
-        """Calculate base price from component salaries"""
-        return sum(
-            component.salary or 0 
-            for component in self.components.all()
-        )
-    
-    class Meta:
-        verbose_name_plural = "Products"
-
+#     @property
+#     def base_price(self):
+#         """Calculate base price from component salaries"""
+#         return sum(
+#             component.salary or 0 
+#             for component in self.components.all()
+#         )
 
 class Order(models.Model):
     STATUS_CHOICES = (
         ('Pending', 'Pending'),
-        ('In progress', 'In progress'),
+        ('InProgress', 'In Progress'),
         ('Completed', 'Completed'),
         ('Cancelled', 'Cancelled'),
+        ('Delivered', 'Delivered'),
     )
-
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
-    components_details = models.ManyToManyField(Cps_details, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField(default=1)
+    details = models.TextField()
+    image = models.ImageField(upload_to='order_images/', blank=True, null=True)
+    # amount = models.IntegerField(default=1)
     full_address = models.CharField(max_length=255, default='', blank=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    due_date = models.DateTimeField()
+    # note = models.TextField(default='', blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    is_quick = models.BooleanField(default=False)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    deposit = models.IntegerField(null=True, blank=True, default=0)
+    # is_paid = models.BooleanField(default=False)
+    due_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Order {self.id} by {self.user.full_name} - {self.status}"
-    
+
+    # ! ------ work ---------
     @property
-    def get_components(self):
-        """Get all components from selected details"""
-        return Components.objects.filter(
-            cps_details__in=self.components_details.all()
-        ).distinct()
-    
-    @property
-    def total_component_salary(self):
-        """Calculate total salary cost from components"""
-        components = self.get_components
-        return sum(component.salary or 0 for component in components)
-    
-    @property
-    def total_details_price(self):
-        """Calculate total price from selected component details"""
-        return sum(detail.price for detail in self.components_details.all())
-    
-    @property
-    def total_price(self):
-        """Calculate total order price"""
-        component_cost = self.total_component_salary
-        details_cost = self.total_details_price
-        return (component_cost + details_cost) * self.amount
+    def real_order_price(self):
+        ''' the real price the user will pay '''
+        return self.price + self.deposit
     
     @property
     def remaining_balance(self):
         """Calculate how much is still owed"""
-        return self.total_price - self.paid
+        return self.real_order_price - self.paid
+    
+    @classmethod
+    def get_delayed_order_balance(self):
+        return self.objects.filter(paid__lt=models.F('price'))
+    
+    @classmethod
+    def get_total_revenue(self):
+        ''' get the addition for all order prices '''
+        return  self.objects.aggregate(total=Sum('price'))['total'] or 0
+    
+    @classmethod
+    def get_total_user_order_price(self, user):
+        ''' addition between price and deposit in one function '''
+        user_orders = self.objects.filter(user=user)
+        total = 0
+        for order in user_orders:
+            total += order.price + order.deposit
+        return total
 
+    def clean(self):
+        super().clean()
+        if self.paid and self.paid > self.price:
+            raise ValidationError({
+                "paid": f"Paid amount ({self.paid}) cannot be bigger than the total price ({self.price})."
+            })
+        
+        # check the numeric fields is mot none to prevent the error 
+        if self.price is None:
+            self.price = 0
+        if self.deposit is None:
+                self.deposit = 0
+        if self.paid is None:
+            self.paid = 0
+        # if self.price and self.price is None:
+        #     raise ValidationError({
+        #         'price': 'you should set 0 or any number here.'})
+        # if self.deposit and self.deposit is None:
+        #     raise ValidationError({
+        #         'deposit': 'you should set 0 or any number here.'})
+        # if self.paid and self.paid is None:
+        #     raise ValidationError({
+        #         'paid': 'you should set 0 or any number here.'})
     class Meta:
         ordering = ['-created_at']
+
+
+class OrderImages(models.Model):
+    image = models.ImageField(upload_to='order_images/', null=True, blank=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)

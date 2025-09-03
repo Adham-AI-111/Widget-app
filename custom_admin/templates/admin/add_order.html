@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% block content %}
+<section class="edit-order-section">
+    <div class="edit-order-container">
+        <form class="edit-order-form" method="post">
+            {% csrf_token %}
+            <div class="form-grid">
+                <!-- loop here -->
+                {% for field in form %}
+                <div class="form-field">
+                    {% if field.name == 'is_quick' %}
+                        <label class="toggle-label">
+                            {{field}}
+                            <span>{{field.label}}</span>
+                        </label>
+                    {% else %}
+                        <label class="form-label">
+                            {{field.label}}
+                        </label>
+                        {{field}}
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="field-error">
+                            {% for error in field.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!--? Form Actions -->
+            <div class="form-actions">
+                <div class="action-group">
+                    <a href="{% url 'admin_orders' %}" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Orders
+                    </a>
+                    
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

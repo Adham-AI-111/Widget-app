@@ -2,7 +2,7 @@
 {% block content %}
 
 <section class="signin-section">
-    <div class="form-container">
+    <div class="form-register">
         <div class="form-header">
             <div class="upload-icon">
                 <i class="fas fa-exclamation-triangle"></i>
@@ -22,7 +22,7 @@
             {% csrf_token %}
             <input type="hidden" name="item_id" value="{{ item.id|default:'12345' }}">
             <div class="form-actions">
-                <a href="{% url 'admin' %}" class="btn-secondary">Cancel</a>
+                <a href="{% url 'admin_cards' %}" class="btn-secondary">Cancel</a>
                 <button type="submit" class="btn-danger">
                     <i class="fas fa-trash"></i> Delete
                 </button>

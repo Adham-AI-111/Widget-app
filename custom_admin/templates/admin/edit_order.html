@@ -1,0 +1,152 @@
+{% extends 'main.html' %}
+{% block content %}
+<
+<section class="edit-order-section">
+    <div class="edit-order-container">
+        <!-- Form Header -->
+        <div class="form-header">
+            <h1>
+                <i class="fas fa-edit header-icon"></i>
+                Edit Order
+            </h1>
+            <p class="form-subtitle">Update order details and information</p>
+            <div class="order-info-badge">
+                Order {{order.id}} - Created on {{order.created_at|date:"F j, Y, g:i a"}}
+            </div>
+            <!-- Contact Actions -->
+            <div class="action-group" style="margin-top: 1rem;">
+                {% if order.user.phone %}
+                <a href="https://wa.me/{{ order.user.phone|urlencode }}" target="_blank" class="btn-secondary">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp User
+                </a>
+                <a href="tel:{{ order.user.phone }}" class="btn-primary">
+                    <i class="fas fa-phone"></i>
+                    Call User
+                </a>
+                {% elif order.phone %}
+                <a href="https://wa.me/{{ order.phone|urlencode }}" target="_blank" class="btn-secondary">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp User
+                </a>
+                <a href="tel:{{ order.phone }}" class="btn-primary">
+                    <i class="fas fa-phone"></i>
+                    Call User
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Current Order Information -->
+        <div class="current-order-info">
+            <div class="info-header">
+                <i class="fas fa-info-circle"></i>
+                Current Order Information
+            </div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">User</div>
+                    <div class="info-value">{{order.user.full_name}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">phone</div>
+                    <div class="info-value">{{order.user.phone}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">email</div>
+                    <div class="info-value">{{order.full_address}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Price</div>
+                    <div class="info-value">${{order.real_order_price}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Paided</div>
+                    <div class="info-value">${{order.paid}}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">remaining</div>
+                    <div class="info-value">${{order.remaining_balance}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="current-order-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-value">{{order.details}}</div>
+                </div>                
+            </div>
+        </div>
+
+        <!-- Order Images Gallery -->
+        {% with images=order.orderimages_set.all %}
+        {% if images %}
+        <div class="order-images-section">
+            <div class="images-header">
+                <i class="fas fa-image"></i>
+                <span>Order Images</span>
+            </div>
+            <div class="image-scroll" role="region" aria-label="Order images">
+                {% for oi in images %}
+                <div class="image-card">
+                    {% if oi.image %}
+                    <img src="{{ oi.image.url }}" alt="Order image {{ forloop.counter }}">
+                    {% else %}
+                    <div class="image-placeholder">No Image</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Alert Message -->
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            Make sure to review all changes before saving the order.
+        </div>
+        <p><strong>Deposit: </strong>{{order.deposit}}</p>
+
+        <!-- Edit Order Form -->
+        <form class="edit-order-form" method="post">
+            {% csrf_token %}
+            <div class="edit-order-fields">
+                <!-- loop here -->
+                {% for field in form %}
+                <div class="form-field">
+                    <label class="form-label">
+                        {{field.label}}
+                    </label>
+                    {{field}}
+                    <!-- <div class="help-text">Choose the product for this order</div> -->
+                    {% if field.errors %}
+                        <div class="field-error">
+                            {% for error in field.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <!--? Form Actions -->
+            <div class="form-actions">
+                <div class="action-group">
+                    <a href="{% url 'admin_orders' %}" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Orders
+                    </a>
+                    
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% include 'quick_access.html' %}
+{% endblock %}

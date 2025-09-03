@@ -2,12 +2,12 @@
 {% block content %}
 
     <!-- Profile Header -->
-    <section class="profile-header">
+    <!-- <section class="profile-header">
         <div class="container">
             <h1>My Profile</h1>
             <p>Manage your account and view your order history</p>
         </div>
-    </section>
+    </section> -->
 
     <!-- Profile Content -->
     <div class="profile-content">
@@ -28,76 +28,14 @@
                     <span>{{user.phone}}</span>
                 </div>
             </div>
-            <button class="btn-secondary">Edit Profile</button>
-        </div>
-
-        <!-- Dashboard Stats -->
-        <div class="admin-section">
-            <h3>Dashboard Overview</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h4>Total Orders</h4>
-                    <span class="stat-number">##</span>
-                    <!-- <p>This month</p> -->
-                </div>
-                <div class="stat-card">
-                    <h4>Debt</h4>
-                    <span class="stat-number">$500</span>
-                    <p></p>
-                </div>
-                <div class="stat-card">
-                    <h4>canclled Orders</h4>
-                    <span class="stat-number">##</span>
-                    <p>Need attention</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Order History -->
-        <div class="profile-section">
-            <h3>Order History</h3>
-            <div class="order-item">
-                <div class="order-header">
-                    <h4>Order #WO-2024-001</h4>
-                    <span class="status-badge status-delivered">Delivered</span>
-                </div>
-                <p><strong>Date:</strong> January 15, 2024</p>
-                <p><strong>Total:</strong> $89.99</p>
-                <p><strong>Items:</strong> Oak Wood Cutting Board (1)</p>
-                <p><strong>Shipping Address:</strong> 123 Main St, City, State 12345</p>
-            </div>
-
-            <div class="order-item">
-                <div class="order-header">
-                    <h4>Order #WO-2024-002</h4>
-                    <span class="status-badge status-processing">Processing</span>
-                </div>
-                <p><strong>Date:</strong> January 20, 2024</p>
-                <p><strong>Total:</strong> $209.97</p>
-                <p><strong>Items:</strong> Walnut Wood Bowl (1), Maple Wood Coaster Set (2)</p>
-                <p><strong>Shipping Address:</strong> 123 Main St, City, State 12345</p>
-            </div>
-
-            <div class="order-item">
-                <div class="order-header">
-                    <h4>Order #WO-2024-003</h4>
-                    <span class="status-badge status-pending">Pending</span>
-                </div>
-                <p><strong>Date:</strong> January 25, 2024</p>
-                <p><strong>Total:</strong> $45.99</p>
-                <p><strong>Items:</strong> Cherry Wood Picture Frame (1)</p>
-                <p><strong>Shipping Address:</strong> 123 Main St, City, State 12345</p>
-            </div>
+            <a href="{% url 'edit_profile' %}" class="btn-secondary">Edit Profile</a>
         </div>
 
         <!-- Account Actions -->
         <div class="profile-section">
             <h3>Account Actions</h3>
             <div class="action-buttons">
-                <button class="btn-secondary">Change Password</button>
-                <button class="btn-secondary">Update Address</button>
-                <button class="btn-secondary">Download Invoices</button>
-                <button class="btn-secondary" style="background-color: #dc3545; color: white;">Delete Account</button>
+                <a href="{% url 'reset-password' %}" class="btn-secondary">Change Password</a>
             </div>
         </div>
     </div>

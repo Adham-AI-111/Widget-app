@@ -4,36 +4,106 @@
 <section class="admin-header">
     <div class="container">
         <h1>Admin Dashboard</h1>
-        <p>Manage orders, products, and customer information</p>
+        <p>Manage orders, and customer information</p>
     </div>
 </section>
-<div class="admin-content">
-        <!-- Dashboard Stats -->
-        <div class="admin-section">
-            <h3>Dashboard Overview</h3>
-            <div class="stats-grid">
+
+<div class="admin-firstdash">
+    <div class="admin-section">
+        <!-- First Dashboard Stats -->
+        <h3>Public Dashboard Overview</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Orders</h4>
+                <span class="stat-number">{{orders.count}}</span>
+                <p>at all</p>
+            </div>
+            <div class="stat-card">
+                <h4>This Month Orders</h4>
+                <span class="stat-number">{{monthly_orders.count}}</span>
+                <p>this month</p>
+            </div>
+            <div class="stat-card">
+                <h4>New Orders</h4>
+                <span class="stat-number">{{new_orders_added.count}}</span>
+                <p>added since two days</p>
+            </div>
+            <div class="stat-card">
+                <h4>today's orders</h4>
+                <span class="stat-number">{{today_orders.count}}</span>
+                <p>Order must be completed</p>
+            </div>
+            <div class="stat-card">
+                <h4>Pending Orders</h4>
+                <span class="stat-number">{{pending_orders.count}}</span>
+                <p>Need attention</p>
+            </div>
+            <div class="stat-card">
+                <h4>Orders In Progress</h4>
+                <span class="stat-number">{{orders_inprogress.count}}</span>
+                <p>current tasks</p>
+            </div>
+            <div class="stat-card">
+                <h4>Completed Orders</h4>
+                <span class="stat-number">{{completed_orders.count}}</span>
+                <p>Order ready to handover</p>
+            </div>
+            <div class="stat-card">
+                <h4>Cancelled Orders</h4>
+                <span class="stat-number">{{cancelled_orders.count}}</span>
+                <p>Ignored Orders</p>
+            </div>
+            <div class="stat-card">
+                <h4>Delivered Orders</h4>
+                <span class="stat-number">{{deliverd_orders.count}}</span>
+                <p>full completed</p>
+            </div>
+            <a href="{% url 'quick_orders' %}" clas="card-link">
                 <div class="stat-card">
-                    <h4>Total Orders</h4>
-                    <span class="stat-number">{{orders.count}}</span>
-                    <!-- <p>This month</p> -->
+                    <h4>Quick Orders</h4>
+                    <span class="stat-number">{{quick_orders.count}}</span>
+                    <p>higher priority</p>
                 </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Second Dashboard Stats -->
+<div class="admin-seconddash">
+    <div class="admin-section">
+        <h3>Finance Dashboard Overview</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Revenue</h4>
+                <span class="stat-number">{{total_revenue}} LE</span>
+                <p>total orders revenue</p>
+            </div>
+            <div class="stat-card">
+                <h4>Real Revenue</h4>
+                <span class="stat-number">{{revenue}} LE</span>
+                <p>All revenue that paided</p>
+            </div>
+            <div class="stat-card">
+                <h4>total remaining balance</h4>
+                <span class="stat-number">{{total_remaining_balance}} LE</span>
+                <p>require to pay</p>
+            </div>
+            <a href="{% url 'delay_orders' %}" class="card-link">
                 <div class="stat-card">
-                    <h4>Revenue</h4>
-                    <span class="stat-number">$3,456</span>
-                    <p>This month</p>
+                    <h4>delayed order balance</h4>
+                    <span class="stat-number">{{delayed_balance_orders}}</span>
+                    <p>orders that haven't been paid for</p>
                 </div>
-                <div class="stat-card">
-                    <h4>Pending Orders</h4>
-                    <span class="stat-number">{{pending_orders.count}}</span>
-                    <p>Need attention</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Products</h4>
-                    <span class="stat-number">{{products.count}}</span>
-                    <p>In inventory</p>
-                </div>
+            </a>
+            <div class="stat-card">
+                <h4>This Month Revenue</h4>
+                <span class="stat-number">{{monthly_revenue}} LE</span>
+                <p>this month</p>
             </div>
         </div>
+    </div>
 </div>
 
 {% include 'quick_access.html' %}

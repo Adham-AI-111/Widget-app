@@ -4,70 +4,56 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Handcrafted Wood Products</h1>
-            <p>Discover our collection of premium wood products, carefully crafted with passion and precision.</p>
-            <a href="#" class="btn-primary">Explore Products</a>
+            <h1>Widget Wood Products Dashboard</h1>
+            <p>Here are summarized cards for your orders and finances.</p>
+            <a href="{% url 'get_order' %}" class="btn-primary">Request Order</a>
         </div>
     </section>
 
-    <!-- Featured Products -->
-    <section class="featured">
-        <div class="container">
-            <h2>Featured Products</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Oak Wood Cutting Board">
-                    <div class="product-info">
-                        <h3>Oak Wood Cutting Board</h3>
-                        <p>Handcrafted oak cutting board perfect for kitchen use.</p>
-                        <span class="price">$89.99</span>
-                        <button class="btn-secondary">View Details</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Walnut Wood Bowl">
-                    <div class="product-info">
-                        <h3>Walnut Wood Bowl</h3>
-                        <p>Beautiful hand-turned walnut bowl for serving or decoration.</p>
-                        <span class="price">$149.99</span>
-                        <button class="btn-secondary">View Details</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Cherry Wood Picture Frame">
-                    <div class="product-info">
-                        <h3>Cherry Wood Picture Frame</h3>
-                        <p>Elegant cherry wood picture frame with natural finish.</p>
-                        <span class="price">$45.99</span>
-                        <button class="btn-secondary">View Details</button>
-                    </div>
-                </div>
+<div class="card-section"> 
+    <!-- First Dashboard Stats -->
+    <div class="admin-section">
+        <h3>Public Overview</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Orders</h4>
+                <span class="stat-number">{{orders.count}}</span>
+                <p>Total</p>
+            </div>
+            <div class="stat-card">
+                <h4>Completed Orders</h4>
+                <span class="stat-number">{{completed_orders.count}}</span>
+                <p>Done Successfully</p>
+            </div>
+            <div class="stat-card">
+                <h4>Pending Orders</h4>
+                <span class="stat-number">{{pending_orders.count}}</span>
+                <p>It will be ready soon</p>
             </div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about">
-        <div class="container">
-            <div class="about-content">
-                <h2>About WoodCraft</h2>
-                <p>We specialize in creating high-quality wood products that bring warmth and beauty to your home. Each piece is carefully crafted by skilled artisans using premium materials and traditional techniques.</p>
-                <div class="features">
-                    <div class="feature">
-                        <h3>Handcrafted</h3>
-                        <p>Every product is made by hand with attention to detail</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Premium Materials</h3>
-                        <p>We use only the finest wood and materials</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Sustainable</h3>
-                        <p>Committed to environmentally responsible practices</p>
-                    </div>
-                </div>
+    </div>
+    
+    <!-- Second Dashboard Stats -->
+    <div class="admin-section">
+        <h3>Finance Overview</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>total price</h4>
+                <span class="stat-number">{{total_price}}</span>
+                <p>total orders price</p>
+            </div>
+            <div class="stat-card">
+                <h4>total paid</h4>
+                <span class="stat-number">{{already_paid}}</span>
+                <p>already paid</p>
+            </div>
+            <div class="stat-card">
+                <h4>will pay later</h4>
+                <span class="stat-number">{{total_remaining_balance}}</span>
+                <p>require to pay</p>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
 {% endblock %}

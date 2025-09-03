@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+{% block content %}
+
+    <!-- Profile Header -->
+    <section class="profile-header">
+        <div class="container">
+            <h1>Order Management</h1>
+            <p>Manage your orders and edit them</p>
+            <div class="btn-area">
+                <a href="{% url 'get_order' %}" class="btn-primary">Request New Order</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="orders-content">
+        <!-- Order History -->
+        <div class="profile-section">
+            <h3>Order History</h3>
+            <!--! Search and Filter Controls -->
+            <form method="get">
+                <div class="admin-controls">
+                    <select class="filter-select" name="status_filter" id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="Pending" {% if request.GET.status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="InProgress" {% if request.GET.status_filter == 'InProgress' %}selected{% endif %}>In Progress</option>
+                        <option value="Completed" {% if request.GET.status_filter == 'Completed' %}selected{% endif %}>completed</option>
+                        <option value="Cancelled" {% if request.GET.status_filter == 'Cancelled' %}selected{% endif %}>cancelled</option>
+                        <option value="Delivered" {% if request.GET.status_filter == 'Delivered' %}selected{% endif %}>delivered</option>
+                    </select>
+                    <input class="filter-select" type="date" name="date_filter" id="dateFilter" value="{{ request.GET.date_filter }}">
+                    <button type="submit" class="btn-primary">Apply</button>
+                </div>
+            </form>
+
+            {% for order in orders %}
+            <a href="{% url 'uedit_order' order.id %}" class="card-link">
+                <div class="order-item">
+                    <div class="order-header">
+                        <h4>Order</h4>
+                        <span class="status-badge status-{{order.status}}">{{order.status}}</span>
+                    </div>
+                    <p><strong>Date:</strong> {{order.created_at|date:"d/m/y"}}</p>
+                    <!-- <p><strong>product:</strong> {{order.product}}</p> -->
+                    <p><strong>Shipping Address:</strong> {{order.full_address}}</p>
+                    <p><strong>Order Prcie:</strong> {{order.price}}</p>
+                    <p><strong>Your Deposit:</strong> {{order.deposit}}</p>
+                    <div class="profile-price">
+                        <p><strong>Total Price:</strong> {{order.real_order_price}} LE</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            {% include 'pagination.html' %}
+        </div>
+    </div>
+
+    {% endblock %}

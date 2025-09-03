@@ -1,36 +1,27 @@
 from django import forms
-from base.models import Products, Components, Cps_details
+from base.models import Order
+from django.core.exceptions import ValidationError
 
-class CreateProductForm(forms.ModelForm):
+
+class AdminOrderEditForm(forms.ModelForm):
     class Meta:
-        model = Products
-        fields = ['name', 'describe', 'image','components']
+        model = Order
+        fields = ['price', 'status', 'paid', 'due_date']
         widgets = {
-            'components': forms.CheckboxSelectMultiple(),
-            # or 'components': forms.SelectMultiple(),
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'full_address': forms.TextInput(attrs={'placeholder': 'Enter full address'}),
+            # 'is_paid': forms.CheckboxInput(attrs={'type':'checkbox', 'class': 'toggle-checkbox'}),
         }
 
-
-class CreateComponentForm(forms.ModelForm):
+class AdminOrderCreationForm(forms.ModelForm):
     class Meta:
-        model = Components
-        fields = ['item', 'salary']
+        model = Order
+        fields = ['details', 'full_address', 'is_quick', 'deposit', 'price', 'due_date']
         widgets = {
-            'item': forms.TextInput(attrs={'placeholder': 'Enter component name'}),
-            'salary': forms.NumberInput(attrs={'placeholder': 'Enter component salary'}),
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            'full_address': forms.TextInput(attrs={'placeholder': 'Enter full address'}),
+            'is_quick': forms.CheckboxInput(attrs={'class': 'toggle-checkbox', 'id': 'is_quick_toggle'}),
         }
-    
-    def clean_item(self):
-        item = self.cleaned_data.get('item')
-        if Components.objects.filter(item__iexact=item).exists():
-            raise forms.ValidationError('Component with this name already exists.')
-        return item
-
-
-class CreateCpsDetailsForm(forms.ModelForm):
-    class Meta:
-        model = Cps_details
-        fields = "__all__"
         labels = {
-            'part_name': 'Shape Name',
+            'is_quick': 'quick order'
         }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to {{ site_name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; color: #222; }
+        .container { background: #fff; max-width: 500px; margin: 40px auto; padding: 32px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+        h2 { color: #2ecc71; }
+        .footer { margin-top: 32px; font-size: 0.95em; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ user_name }}!</h2>
+        <p>Thank you for joining <strong>{{ site_name }}</strong>. We're excited to have you on board.</p>
+        <p>If you have any questions, feel free to contact us at <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.</p>
+        <div class="footer">
+            &copy; {{ site_name }}<br>
+            This is an automated message, please do not reply directly.
+        </div>
+    </div>
+</body>
+</html> 

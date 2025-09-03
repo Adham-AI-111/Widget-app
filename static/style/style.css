@@ -221,6 +221,10 @@ body {
     font-size: 0.9rem;
 }
 
+.btn-area{
+    padding: 1.5rem;
+}
+
 .btn-secondary:hover {
     background-color: #f2e8e5;
     border-color: #846358;
@@ -292,44 +296,13 @@ body {
     margin-bottom: 1rem;
 }
 
-/* About Section */
-.about {
-    padding: 80px 0;
-    background-color: #fdf8f6;
-}
+/* home dashboard Section */
 
-.about-content {
+.card-section {
     text-align: center;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-}
-
-.about h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #43302b;
-    margin-bottom: 1.5rem;
-}
-
-.about p {
-    font-size: 1.1rem;
-    color: #846358;
-    margin-bottom: 3rem;
-    line-height: 1.6;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.feature {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(67, 48, 43, 0.1);
+    margin-top: 4rem;
 }
 
 .feature h3 {
@@ -416,18 +389,21 @@ body {
     font-weight: 500;
 }
 
-.filter-btn.active,
-.filter-btn:hover {
-    background-color: #846358;
-    color: white;
-    border-color: #846358;
-}
-
 /* Forms */
-.form-container {
+.form-register {
     max-width: 480px;
     margin: 2rem auto;
     padding: 2rem;
+    margin-top: 6rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.form-order {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    margin-top: 6rem;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -436,6 +412,12 @@ body {
 .form-field {
     margin-bottom: 1.5rem;
     position: relative;
+}
+
+.edit-order-fields{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two equal columns */
+    gap: 15px; /* space between fields */
 }
 
 .form-label {
@@ -480,13 +462,6 @@ body {
     display: block;
 }
 
-.help-text {
-    display: block;
-    margin-top: 0.5rem;
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
 /* Profile Page */
 .profile-header {
     background: linear-gradient(135deg, #fdf8f6 0%, #eaddd7 100%);
@@ -496,6 +471,12 @@ body {
 }
 
 .profile-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-top: 6rem;
+}
+.orders-content {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
@@ -542,9 +523,19 @@ body {
 }
 
 .admin-content {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 5rem;
+}
+.admin-firstdash {
+    max-width: 1100px;
+    margin: 0 auto;
+    margin-top: 4rem;
+    margin-bottom: 0.3rem;
+}
+.admin-seconddash {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .admin-section {
@@ -564,28 +555,33 @@ body {
 .status-badge {
     padding: 4px 12px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
-.status-pending {
+.status-Pending {
     background-color: #fff3cd;
     color: #856404;
 }
 
-.status-processing {
+.status-InProgress {
     background-color: #d1ecf1;
     color: #0c5460;
 }
 
-.status-shipped {
+.status-Completed {
     background-color: #d4edda;
     color: #155724;
 }
 
-.status-delivered {
-    background-color: #d1e7dd;
-    color: #0f5132;
+.status-Cancelled {
+    background-color: #c20524;
+    color: #edebe7;
+}
+
+.status-Delivered {
+    background-color: #0b6c69;
+    color: #edebe7;
 }
 
 /* Additional Styles */
@@ -598,12 +594,6 @@ body {
     font-size: 0.9rem;
     color: #846358;
     margin-bottom: 0.25rem;
-}
-
-.out-of-stock {
-    color: #dc3545;
-    font-weight: 600;
-    font-size: 0.9rem;
 }
 
 .form-footer {
@@ -625,6 +615,12 @@ body {
 
 .profile-info {
     margin-bottom: 1.5rem;
+}
+
+.profile-price {
+    background-color: #ffffff;
+    border-radius: 12px;
+    margin: 0.25rem 0;
 }
 
 .info-row {
@@ -664,6 +660,12 @@ body {
     border-radius: 8px;
     text-align: center;
     border: 1px solid #eaddd7;
+    display: inline-block;      /* so transform works properly */
+    transition: transform 0.3s ease; /* smooth effect */
+}
+
+.stat-card:hover {
+    transform: scale(1.05); /* make it 20% bigger */
 }
 
 .stat-number {
@@ -672,7 +674,9 @@ body {
     font-weight: 700;
     color: #846358;
     margin: 0.5rem 0;
+    padding: 0.5rem;
 }
+
 
 .stat-card h4 {
     color: #43302b;
@@ -958,7 +962,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop') center/cover;
+    /* background: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop') center/cover; */
     opacity: 0.3;
 }
 
@@ -1124,10 +1128,6 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .features {
-        grid-template-columns: 1fr;
-    }
-
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1222,7 +1222,7 @@ body {
 /* Flash Messages */
 .flash-messages-container {
     position: fixed;
-    top: 20px;
+    top: 100px;
     right: 20px;
     z-index: 1000;
     max-width: 400px;
@@ -1498,7 +1498,7 @@ color: #155724;
 .form-grid {
 display: grid;
 grid-template-columns: 1fr;
-gap: 1.5rem;
+gap: 0.8rem;
 margin-bottom: 1.5rem;
 }
 
@@ -1554,13 +1554,13 @@ padding: 0 20px;
 }
 
 .help-text {
-margin-top: 4px;
-font-size: 12px;
+margin-top: 1px;
+font-size: 13px;
 color: #6c757d;
 font-style: italic;
 text-align: center;
 color: #846358;
-margin-bottom: 2rem;
+margin-bottom: 0.5rem;
 }
 
 .summary-divider {
@@ -1711,7 +1711,9 @@ color: #155724;
 display: inline-block;
 background-color: #846358;
 color: white;
-padding: 12px 24px;
+padding: 10px 20px;
+margin-bottom: 0.5rem;
+margin-top: 0.3rem;
 text-decoration: none;
 border-radius: 8px;
 font-weight: 600;
@@ -1732,6 +1734,8 @@ box-shadow: 0 4px 12px rgba(132, 99, 88, 0.3);
 background-color: white;
 color: #846358;
 padding: 10px 20px;
+margin-bottom: 0.5rem;
+margin-top: 0.3rem;
 border: 2px solid #eaddd7;
 border-radius: 6px;
 font-weight: 500;
@@ -1756,6 +1760,7 @@ margin-top: 3rem;
 padding-top: 2rem;
 border-top: 1px solid #eaddd7;
 }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -1791,6 +1796,8 @@ border-top: 1px solid #eaddd7;
     background-color: #dc3545;
     color: white;
     padding: 12px 24px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.3rem;
     border: none;
     border-radius: 8px;
     font-weight: 600;
@@ -1853,7 +1860,7 @@ border-top: 1px solid #eaddd7;
     }
 }
 
-/* for admin new display */
+/*!---------------->  for admin new display */
 /* NEW ADMIN CARD SYSTEM CLASSES - Add these to your existing style.css */
 
 .admin-cards-container {
@@ -1948,6 +1955,7 @@ border-top: 1px solid #eaddd7;
 }
 
 .card-price {
+    padding: 0.7rem;
     font-size: 1.25rem;
     font-weight: 700;
     color: #846358;
@@ -1958,6 +1966,10 @@ border-top: 1px solid #eaddd7;
     gap: 0.75rem;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.card-link {
+    text-decoration: none;
 }
 
 .card-actions {
@@ -2012,22 +2024,6 @@ border-top: 1px solid #eaddd7;
 /* Order specific styles */
 .order-card {
     border-left: 4px solid #846358;
-}
-
-.order-card.status-pending {
-    border-left-color: #856404;
-}
-
-.order-card.status-processing {
-    border-left-color: #0c5460;
-}
-
-.order-card.status-shipped {
-    border-left-color: #155724;
-}
-
-.order-card.status-delivered {
-    border-left-color: #0f5132;
 }
 
 .customer-info {
@@ -2091,6 +2087,63 @@ border-top: 1px solid #eaddd7;
     align-items: center;
 }
 
+/* Modern Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.pagination-list {
+    display: inline-flex;
+    list-style: none;
+    background: #ffffff;
+    border: 1px solid #eaddd7;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(67, 48, 43, 0.05);
+    overflow: hidden;
+}
+
+.pagination-item {
+    border-right: 1px solid #eaddd7;
+}
+
+.pagination-item:last-child {
+    border-right: none;
+}
+
+.pagination-link {
+    display: block;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: #43302b;
+    background: #fff;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    min-width: 38px;
+    text-align: center;
+}
+
+.pagination-link:hover {
+    background: #fdf8f6;
+    color: #846358;
+}
+
+.pagination-item.active .pagination-link,
+.pagination-item .pagination-link[aria-current="page"],
+.pagination-item.active span.pagination-link {
+    background: #846358;
+    color: #fff;
+}
+
+.pagination-item.disabled .pagination-link,
+.pagination-item.disabled span.pagination-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #fff;
+    color: #846358;
+}
+
 .search-box {
     flex: 1;
     min-width: 250px;
@@ -2111,7 +2164,7 @@ border-top: 1px solid #eaddd7;
 .filter-select {
     padding: 10px 16px;
     border: 2px solid #eaddd7;
-    border-radius: 8px;
+    border-radius: 5px;
     background-color: white;
     color: #43302b;
     font-size: 0.9rem;
@@ -2178,5 +2231,367 @@ border-top: 1px solid #eaddd7;
     .card-btn {
         text-align: center;
         padding: 8px 12px;
+    }
+}
+
+
+/* Missing CSS Classes for Edit Order Page - Add these to your style.css */
+
+/*!------------------> Edit Order Section */
+
+.edit-order-section {
+    padding: 120px 0 80px;
+    background: linear-gradient(135deg, #fdf8f6 0%, #eaddd7 100%);
+    min-height: 100vh;
+}
+
+.edit-order-container {
+    max-width: 910px;
+    background: white;
+    margin: 0 auto;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(67, 48, 43, 0.1);
+    border: 1px solid #c8b2ac;
+}
+
+.header-icon {
+    color: #846358;
+    font-size: 2rem;
+}
+
+.order-info-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #846358 0%, #977669 100%);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.edit-order-form {
+    margin-top: 2rem;
+}
+
+/* Current Order Info Section */
+.current-order-info {
+    background: linear-gradient(135deg, #f2e8e5 0%, #eaddd7 100%);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border: 1px solid #eaddd7;
+}
+
+/* Order images gallery */
+.order-images-section {
+    background: #ffffff;
+    border: 1px solid #eaddd7;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(67, 48, 43, 0.06);
+}
+
+.images-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #43302b;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.image-scroll {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(160px, 1fr);
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scroll-snap-type: x mandatory;
+}
+
+.image-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.image-scroll::-webkit-scrollbar-track {
+    background: #f2e8e5;
+    border-radius: 10px;
+}
+
+.image-scroll::-webkit-scrollbar-thumb {
+    background: #c8b2ac;
+    border-radius: 10px;
+}
+
+.image-card {
+    scroll-snap-align: start;
+    background: #fdf8f6;
+    border: 1px solid #eaddd7;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-placeholder {
+    color: #846358;
+    font-weight: 600;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #43302b;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.info-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #f2e8e5;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #846358;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #43302b;
+    font-weight: 600;
+}
+
+.info-detail {
+    display:ruby;
+    background: white;
+    padding: 1rem;
+    border-radius: 20px;
+    border: 1px solid #f2e8e5;
+    margin-bottom: 0.5rem;
+    margin-top: 0.3rem;
+
+}
+
+/* Action Groups */
+.action-group {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Responsive adjustments for edit order page */
+@media (max-width: 768px) {
+    .edit-order-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-group {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-order-container {
+        padding: 1rem;
+    }
+
+    .action-group {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* reset password */
+
+.reset-password{
+    margin-top: 5rem;
+}
+
+/* for is_pid checkbox */
+/* Modern Toggle Checkbox */
+.toggle-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 60px;
+    height: 30px;
+    background: #e5e7eb;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.toggle-checkbox::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-checkbox:checked {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    border-color: #22c55e;
+}
+
+.toggle-checkbox:checked::before {
+    transform: translateX(30px);
+}
+
+.toggle-checkbox:hover {
+    background: #d1d5db;
+}
+
+.toggle-checkbox:checked:hover {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+}
+
+/* Toggle label styling */
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+    color: #43302b;
+    margin-bottom: 0.5rem;
+}
+
+.toggle-label .toggle-checkbox {
+    margin: 0;
+}
+
+/* toggle button for admin filter */
+
+/* Quick Badge */
+.quick-badge {
+    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(74, 222, 128, 0.3);
+}
+
+/* Admin Floating Action Button */
+.admin-fab {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1100;
+}
+
+.admin-fab-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: #846358;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(67,48,43,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.admin-fab.open .admin-fab-toggle,
+.admin-fab-toggle:hover {
+    background: #977669;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(67,48,43,0.3);
+}
+
+.admin-fab-menu {
+    position: absolute;
+    right: 0;
+    bottom: 70px;
+    display: grid;
+    gap: 8px;
+    background: transparent;
+    z-index: 2; /* ensure menu sits above backdrop */
+}
+
+/* Ensure hidden attribute actually hides despite display styles */
+.admin-fab-menu[hidden],
+.admin-fab-backdrop[hidden] {
+    display: none !important;
+}
+
+.admin-fab-item {
+    background: #ffffff;
+    color: #846358;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #eaddd7;
+    box-shadow: 0 6px 16px rgba(67,48,43,0.12);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-fab-item:hover {
+    background: #f2e8e5;
+}
+
+.admin-fab-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.0);
+    z-index: 1; /* below menu but above page */
+}
+
+@media (max-width: 480px) {
+    .admin-fab {
+        right: 16px;
+        bottom: 16px;
+    }
+    .admin-fab-toggle {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
     }
 }

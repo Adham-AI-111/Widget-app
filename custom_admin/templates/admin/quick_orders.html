@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="admin-content">
+    <div class="admin-section">
+        <h3>Quick Orders Management</h3>
+        
+        <!-- search -->
+        <form method="get">
+            <div class="admin-controls">
+                <input name="q" value="{{ request.GET.q }}" type="text" class="search-box" placeholder="Search for users or details..." id="orderSearch">
+            </div>
+        </form>
+<!-- Orders Cards Container -->
+        <div class="admin-cards-container" id="ordersContainer">
+            {% for order in orders %}
+            <div class="admin-card order-card status-{{order.status}}" data-status="{{order.status}}" data-customer="{{order.user.full_name|lower}}" data-order-id="{{order.id|lower}}">
+                <!-- ! -----image----- -->
+                <div class="product-image-placeholder">
+                    {% if order.image %}
+                        <img src="{{order.image.url}}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    {% else %}
+                        🪵
+                    {% endif %}
+                </div>
+                <!-- !---------------- -->
+                <div class="card-header">
+                    <!-- <span class="card-id">{{order.status}}</span> -->
+                    <span class="status-badge status-{{order.status}}">{{order.status|title}}</span>
+                    {% if order.is_quick %}
+                    <span class="quick-badge">Quick</span>
+                    {% endif %}
+                    <span class="card-date">{{order.created_at|date:"d/m/y"}}</span>
+                </div>
+                
+                <div class="card-body">
+                    <div class="customer-info">
+                        <span class="customer-name">{{order.user.full_name}}</span>
+                        <span class="customer-email">{{order.full_address}}</span>
+                    </div>
+                    
+                    <div class="product-list">
+                        <div class="product-item">{{order.details|truncatewords:10}}</div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <span class="card-price">${{order.real_order_price}}</span>
+                    <!-- edit button -->
+                    {{order.id}}
+                    <div class="card-actions">
+                        <a href="{% url 'edit_order' order.id %}" class="card-btn card-btn-edit">Display Order</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% include 'pagination.html' %}
+
+        <!-- Empty State (hidden by default, show when no results) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-state-icon">📦</div>
+            <h4>No orders found</h4>
+            <p>Try adjusting your search or filter criteria.</p>
+        </div>
+    </div>
+</div>
+
+{% include 'quick_access.html' %}
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'main.html' %}
+{% block content %}
+    <!-- Order Section -->
+    <section class="product-config-section">
+        <div class="config-container">
+            <div class="page-header">
+                <h1>{{product.name}}</h1>
+                <p class="page-subtitle">Fill out the form below to place your custom order. you can sharing images with us and write a note if you want another design.</p>
+                <!-- <img src="{{product.image.url}}"> -->
+            </div>
+
+            <!-- Alert for form submission feedback -->
+            <div id="alert-container" style="display: none;">
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Your order request has been submitted successfully. We'll contact you soon!
+                </div>
+            </div>
+
+            <form id="orderForm" class="product-form" method="post">
+                {% csrf_token %}
+                <!-- Order Details Section -->
+                <div class="form-section active">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            Order Details
+                        </h3>
+                    </div>
+                    
+                    <div class="form-grid">
+                        {% for field in form %}
+                        <div class="form-field">
+                            <label class="form-label" >{{ field.label }}<span class="required">*</span></label>
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- ? ====== Budget Section -->
+                <div class="form-section active">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <span class="section-icon">💰</span>
+                            Budget Information
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Submit Order Request</button>
+                    <a href="{% url 'profile' %}" class="btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
