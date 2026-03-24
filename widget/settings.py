@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'base',
-    'custom_admin.apps.CustomAdminConfig',  # ✅
+    'custom_admin.apps.CustomAdminConfig', 
 ]
 
 MIDDLEWARE = [
